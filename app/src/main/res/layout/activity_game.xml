@@ -13,7 +13,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginBottom="88dp"
         android:ems="10"
-        android:hint="Skriv Bogstav"
+        android:hint="Skriv bogstav"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
