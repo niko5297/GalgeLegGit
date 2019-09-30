@@ -12,12 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     Galgelogik galgelogik = new Galgelogik();
+    TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav;
@@ -28,9 +29,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_game);
 
         tjekBogstav = findViewById(R.id.tjekBogstav);
+        ord = findViewById(R.id.ord);
+        gættedeBogstaver = findViewById(R.id.gættedeBogstaver);
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
         tjekBogstav.setOnClickListener(this);
+
+
+        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
+
+        gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+
+
+
+
+
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -38,8 +51,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == tjekBogstav) {
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() ==1) {
             System.out.println(skriveFelt.getText());
+            galgelogik.gætBogstav(skriveFelt.getText().toString());
+            opdaterOrdOgGættedeBogstaver();
+        }
+        else {
+            skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
         }
 
     }
@@ -68,5 +86,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void opdaterOrdOgGættedeBogstaver() {
+        ord.setText("Gæt ordet: " + galgelogik.getSynligtOrd());
+        gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+
+        if (galgelogik.erSpilletVundet()) {
+            ord.setText("\nDu har vundet");
+        }
+        if (galgelogik.erSpilletTabt()) {
+            ord.setText("Du har tabt, ordet var : " + galgelogik.getOrdet());
+        }
+
+    }
+
+    private void opdaterGalge(){
+
     }
 }

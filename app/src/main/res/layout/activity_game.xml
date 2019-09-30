@@ -23,7 +23,7 @@
         android:id="@+id/galge"
         android:layout_width="536dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="190dp"
         app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,17 +47,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/galge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/gættedeBogstaver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="59dp"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
