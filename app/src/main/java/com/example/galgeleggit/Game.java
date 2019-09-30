@@ -1,8 +1,10 @@
 package com.example.galgeleggit;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +31,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
         tjekBogstav.setOnClickListener(this);
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
     }
@@ -43,7 +45,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //menu.add(Menu.NONE, 1, Menu.NONE, "Hjælp").setIcon(R.drawable.baseline_help_outline_black_18dp);
 
         getMenuInflater().inflate(R.menu.game_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -52,14 +53,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-       /* if (item.getItemId() == 1){
-            System.out.println("Du har trykket");
-        }
-        */
         int id = item.getItemId();
         switch (id){
             case R.id.hjælp:
-                Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Hjælp");
+                dialog.setIcon(R.drawable.ic_help_black_24dp);
+                dialog.setMessage("Spillet her går ud på....");
+                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+                dialog.show();
                 break;
         }
         return super.onOptionsItemSelected(item);
