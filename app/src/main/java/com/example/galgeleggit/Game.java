@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     Galgelogik galgelogik = new Galgelogik();
@@ -29,7 +30,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == tjekBogstav){
+        if (view == tjekBogstav) {
             System.out.println(skriveFelt.getText());
         }
 
