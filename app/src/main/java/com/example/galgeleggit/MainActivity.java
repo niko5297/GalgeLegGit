@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView overskrift, introduktion;
     Button start;
-    ImageView billede;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

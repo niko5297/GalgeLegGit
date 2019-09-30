@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
+    Galgelogik galgelogik = new Galgelogik();
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav;
@@ -21,6 +22,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         tjekBogstav = findViewById(R.id.tjekBogstav);
         skriveFelt = findViewById(R.id.skriveFelt);
+        billede = findViewById(R.id.galge);
         tjekBogstav.setOnClickListener(this);
 
     }
