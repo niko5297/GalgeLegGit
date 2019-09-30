@@ -1,6 +1,7 @@
 package com.example.galgeleggit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +29,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
         tjekBogstav.setOnClickListener(this);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
     }
 
@@ -39,18 +43,25 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, 1, Menu.NONE, "Hjælp");
+        //menu.add(Menu.NONE, 1, Menu.NONE, "Hjælp").setIcon(R.drawable.baseline_help_outline_black_18dp);
 
-        return true;
+        getMenuInflater().inflate(R.menu.game_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == 1){
+       /* if (item.getItemId() == 1){
             System.out.println("Du har trykket");
         }
-
-        return true;
+        */
+        int id = item.getItemId();
+        switch (id){
+            case R.id.hjælp:
+                Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
