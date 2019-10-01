@@ -22,6 +22,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav;
+    static int antalForkerteGæt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             System.out.println(skriveFelt.getText());
             galgelogik.gætBogstav(skriveFelt.getText().toString());
             opdaterOrdOgGættedeBogstaver();
+            opdaterGalge();
         }
         else {
             skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
@@ -101,6 +103,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void opdaterGalge(){
+        if(!galgelogik.erSidsteBogstavKorrekt()) {
+            antalForkerteGæt++;
 
+            switch (antalForkerteGæt){
+                case 1: billede.setImageResource(R.drawable.galge);
+            }
+
+        }
     }
 }
