@@ -103,11 +103,24 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void opdaterGalge(){
-        if(!galgelogik.erSidsteBogstavKorrekt()) {
+        if(!galgelogik.erSidsteBogstavKorrekt() && !galgelogik.getBrugteBogstaver().contains(gættedeBogstaver.getText().toString())) {
             antalForkerteGæt++;
 
             switch (antalForkerteGæt){
                 case 1: billede.setImageResource(R.drawable.galge);
+                    break;
+                case 2: billede.setImageResource(R.drawable.forkert1);
+                    break;
+                case 3: billede.setImageResource(R.drawable.forkert2);
+                    break;
+                case 4: billede.setImageResource(R.drawable.forkert3);
+                    break;
+                case 5: billede.setImageResource(R.drawable.forkert4);
+                    break;
+                case 6: billede.setImageResource(R.drawable.forkert5);
+                    break;
+                case 7: billede.setImageResource(R.drawable.forkert6);
+                    break;
             }
 
         }
