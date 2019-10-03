@@ -21,7 +21,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
-    Button tjekBogstav;
+    Button tjekBogstav, startNytSpil;
     static int antalForkerteGæt = 0;
 
     @Override
@@ -34,6 +34,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         gættedeBogstaver = findViewById(R.id.gættedeBogstaver);
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
+        startNytSpil = findViewById(R.id.nytSpil);
+        startNytSpil.setOnClickListener(this);
         tjekBogstav.setOnClickListener(this);
 
 
@@ -52,15 +54,38 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() < 1){
+            skriveFelt.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");
+        }
+
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() > 1){
+            skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
+        }
+
         if (view == tjekBogstav && skriveFelt.getText().toString().length() ==1) {
             System.out.println(skriveFelt.getText());
             opdaterGalge();
             opdaterOrdOgGættedeBogstaver();
 
+
         }
-        else {
-            skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
+
+        if (view == startNytSpil){
+            galgelogik.nulstil();
+            antalForkerteGæt = 0;
+            billede.setImageDrawable(null);
+            opdaterOrdOgGættedeBogstaver();
+            AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
+            tabtDialog.setTitle("Nyt spil");
+            tabtDialog.setMessage("Du har startet et nyt spil");
+            tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                }
+            });
+            tabtDialog.show();
+
         }
+
 
     }
     @Override
@@ -90,14 +115,39 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
     private void opdaterOrdOgGættedeBogstaver() {
-        ord.setText("Gæt ordet: " + galgelogik.getSynligtOrd());
-        gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+        ord.setText("Gæt ordet: " + galgelogik.getSynligtOrd() + "\n\n");
+        if (galgelogik.getBrugteBogstaver().size()>0) {
+            if (galgelogik.erSidsteBogstavKorrekt()) {
+                gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+            } else {
+                gættedeBogstaver.setText("Du gættede desværre forkert... prøv igen \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+            }
 
-        if (galgelogik.erSpilletVundet()) {
-            ord.setText("\nDu har vundet");
+            if (galgelogik.erSpilletVundet()) {
+                ord.setText("\nDu har vundet");
+                AlertDialog.Builder vindDialog = new AlertDialog.Builder(this);
+                vindDialog.setTitle("DU VANDT");
+                vindDialog.setMessage("Stort tillykke med sejren!");
+                vindDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+                vindDialog.show();
+            }
+            if (galgelogik.erSpilletTabt()) {
+                ord.setText("Du har tabt, ordet var : " + galgelogik.getOrdet());
+                AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
+                tabtDialog.setTitle("Du tabte desværre");
+                tabtDialog.setMessage("Bedre held næste gang. Du kan altid starte et nyt spil");
+                tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+                tabtDialog.show();
+            }
         }
-        if (galgelogik.erSpilletTabt()) {
-            ord.setText("Du har tabt, ordet var : " + galgelogik.getOrdet());
+        else {
+            gættedeBogstaver.setText(getString(R.string.gættedeBogstaverStart) + " " + galgelogik.getBrugteBogstaver());
         }
 
     }
