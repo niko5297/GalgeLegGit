@@ -104,7 +104,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Hjælp");
                 dialog.setIcon(R.drawable.ic_help_black_24dp);
-                dialog.setMessage("Spillet her går ud på....");
+                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
+                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
+                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
+                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
+                        "Held og lykke.");
                 dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                     }
