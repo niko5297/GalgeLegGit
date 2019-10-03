@@ -54,9 +54,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         if (view == tjekBogstav && skriveFelt.getText().toString().length() ==1) {
             System.out.println(skriveFelt.getText());
-            galgelogik.gætBogstav(skriveFelt.getText().toString());
-            opdaterOrdOgGættedeBogstaver();
             opdaterGalge();
+            opdaterOrdOgGættedeBogstaver();
+
         }
         else {
             skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
@@ -103,7 +103,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void opdaterGalge(){
-        if(!galgelogik.erSidsteBogstavKorrekt() && !galgelogik.getBrugteBogstaver().contains(gættedeBogstaver.getText().toString())) {
+        boolean brugtBogstav = false;
+        if (galgelogik.getBrugteBogstaver().contains(skriveFelt.getText().toString())){
+            brugtBogstav = true;
+        }
+        galgelogik.gætBogstav(skriveFelt.getText().toString());
+        if(!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
             antalForkerteGæt++;
 
             switch (antalForkerteGæt){
