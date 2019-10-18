@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"
         android:text="@string/gættedeBogstaverStart"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

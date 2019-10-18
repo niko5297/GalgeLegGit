@@ -123,6 +123,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (galgelogik.getBrugteBogstaver().size()>0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
                 gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+
             } else {
                 gættedeBogstaver.setText("Du gættede desværre forkert... prøv igen \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
             }
