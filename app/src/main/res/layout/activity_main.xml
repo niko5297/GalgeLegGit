@@ -6,11 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="25dp"
         android:text="Start spillet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +30,7 @@
         android:id="@+id/introduktion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="200dp"
         android:text="Dette spil handler om at gætte ordet.\n Du gør dette ved at gætte på bogstaver\n indtil at ordet vises. Hvis du svarer forkert\n mere end 6 forkerte bogstaver har du tabt spillet.\n\n Held og lykke"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,31 +42,30 @@
         android:id="@+id/overskrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:text="Galge Leg"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/forkert6"
         app:layout_constraintBottom_toTopOf="@+id/introduktion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overskrift"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/lavetAf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="400dp"
         android:text="Dette spil er lavet af\n Nikolaj Wassmann - s185082"
         android:textAlignment="center"
         android:textSize="30sp"
