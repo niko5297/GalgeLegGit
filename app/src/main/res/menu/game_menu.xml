@@ -7,11 +7,17 @@
         android:title=""
         app:showAsAction="always">
     <menu>
-    <item
+        <item
         android:id="@+id/hjælp"
         android:icon="@drawable/ic_help_black_24dp"
         android:title="Hjælp"
         app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/highscore"
+            android:title="Highscore"
+            android:icon="@drawable/ic_iconfinder_trophy_1054950"
+            app:showAsAction="ifRoom" />
     </menu>
     </item>
 </menu>

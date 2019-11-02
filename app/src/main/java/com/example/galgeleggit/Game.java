@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
-    Galgelogik galgelogik = new Galgelogik();
+    static Galgelogik galgelogik = new Galgelogik();
     TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
@@ -85,6 +86,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             tabtDialog.show();
 
         }
+        skriveFelt.getText().clear();
 
 
     }
@@ -115,6 +117,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 });
                 dialog.show();
                 break;
+            case R.id.highscore:
+                Intent i = new Intent(this,HighScore.class);
+                startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -143,7 +148,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 ord.setText("Du har tabt, ordet var : " + galgelogik.getOrdet());
                 AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
                 tabtDialog.setTitle("Du tabte desværre");
-                tabtDialog.setMessage("Bedre held næste gang. Du kan altid starte et nyt spil");
+                tabtDialog.setMessage("Bedre held næste gang. Du kan altid starte et nyt spil.\nOrdet var: " + galgelogik.getOrdet());
                 tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                     }
