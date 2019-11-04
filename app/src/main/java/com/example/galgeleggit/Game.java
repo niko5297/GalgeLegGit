@@ -31,6 +31,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     Button tjekBogstav, startNytSpil;
     static int antalForkerteGæt = 0;
 
+    /**
+     * Lav aktivitet for vinder og taber og før informationer over i den aktivitet
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
