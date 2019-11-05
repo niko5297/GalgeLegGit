@@ -9,8 +9,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class VinderAktivitet extends AppCompatActivity {
+public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
+
+    Game game;
+    Button nytspil, tilbage;
+    TextView vinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +26,16 @@ public class VinderAktivitet extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        AlertDialog.Builder vindDialog = new AlertDialog.Builder(this);
-        vindDialog.setTitle("DU VANDT");
-        vindDialog.setMessage("Stort tillykke med sejren Din score er lokalt blevet gemt i Highscore!");
-        vindDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-            }
-        });
-        vindDialog.show();
+        nytspil = findViewById(R.id.nytspil2);
+        tilbage = findViewById(R.id.tilStart);
+        vinder = findViewById(R.id.vinder);
+
+        vinder.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
+                "Ordet du har gættet er: " + game.galgelogik.getOrdet() +
+        "\nog du fik kun " +game.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
+
+        nytspil.setOnClickListener(this);
+        tilbage.setOnClickListener(this);
     }
 
 
@@ -62,5 +71,21 @@ public class VinderAktivitet extends AppCompatActivity {
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view == nytspil){
+            game.galgelogik.nulstil();
+            Intent i = new Intent(this,Game.class);
+            startActivity(i);
+        }
+
+        if (view == tilbage){
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
+        }
+
     }
 }
