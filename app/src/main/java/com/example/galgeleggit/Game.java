@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +16,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     static Galgelogik galgelogik = new Galgelogik();
-    Set<String> stringSet;
-    SharedPreferences preferences;
     TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav, startNytSpil;
     static int antalForkerteGæt = 0;
+    public static ArrayList<String> lokalHighscore = new ArrayList<>();
+    public static final String prefsFile = "PrefsFile";
 
     /**
      * Lav aktivitet for vinder og taber og før informationer over i den aktivitet
@@ -61,8 +60,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     }
 
@@ -147,28 +144,17 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
 
             if (galgelogik.erSpilletVundet()) {
-                stringSet.add(String.valueOf(galgelogik.getAntalForkerteBogstaver()) + "forkerte bogstaver på ordet " + galgelogik.getOrdet());
-                ord.setText("\nDu har vundet");
-                AlertDialog.Builder vindDialog = new AlertDialog.Builder(this);
-                vindDialog.setTitle("DU VANDT");
-                vindDialog.setMessage("Stort tillykke med sejren Din score er lokalt blevet gemt i Highscore!");
-                vindDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                vindDialog.show();
-                preferences.edit().putStringSet("highScore",stringSet).apply();
+                lokalHighscore.add(galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver på ordet " + galgelogik.getOrdet());
+                SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
+                editor.putString("highscore", lokalHighscore.toString());
+                editor.apply();
+                Intent i = new Intent(this,VinderAktivitet.class);
+                startActivity(i);
+
             }
             if (galgelogik.erSpilletTabt()) {
-                ord.setText("Du har tabt, ordet var : " + galgelogik.getOrdet());
-                AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
-                tabtDialog.setTitle("Du tabte desværre");
-                tabtDialog.setMessage("Bedre held næste gang. Du kan altid starte et nyt spil.\nOrdet var: " + galgelogik.getOrdet());
-                tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                tabtDialog.show();
+                Intent i = new Intent(this,TaberAktivitet.class);
+                startActivity(i);
             }
         }
         else {
