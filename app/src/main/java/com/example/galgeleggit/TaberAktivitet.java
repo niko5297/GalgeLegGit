@@ -9,10 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import static com.example.galgeleggit.Game.galgelogik;
 
-public class TaberAktivitet extends AppCompatActivity {
+public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
+
+    Game game;
+    Button nytspil, tilbage;
+    TextView taber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +28,15 @@ public class TaberAktivitet extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
-        tabtDialog.setTitle("Du tabte desværre");
-        tabtDialog.setMessage("Bedre held næste gang. Du kan altid starte et nyt spil.\nOrdet var: " + galgelogik.getOrdet());
-        tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-            }
-        });
-        tabtDialog.show();
+        nytspil = findViewById(R.id.nytspil3);
+        tilbage = findViewById(R.id.tilStart2);
+        taber = findViewById(R.id.taber);
+
+        taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
+                "Ordet du skulle have gættet var: " + game.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
+
+        nytspil.setOnClickListener(this);
+        tilbage.setOnClickListener(this);
     }
 
     @Override
@@ -62,5 +70,20 @@ public class TaberAktivitet extends AppCompatActivity {
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == nytspil){
+            game.galgelogik.nulstil();
+            Intent i = new Intent(this,Game.class);
+            startActivity(i);
+
+        }
+
+        if (view == tilbage){
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
+        }
     }
 }
