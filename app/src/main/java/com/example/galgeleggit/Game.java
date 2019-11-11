@@ -58,7 +58,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             antalForkerteGæt=0;
             billede.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
+            visGalge();
         }
+
 
 
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
