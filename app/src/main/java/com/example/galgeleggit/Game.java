@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
@@ -27,7 +29,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     ImageView billede;
     Button tjekBogstav, startNytSpil;
     static int antalForkerteGæt = 0;
-    public static ArrayList<String> lokalHighscore = new ArrayList<>();
+    public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
     /**
@@ -74,7 +76,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (view == tjekBogstav && skriveFelt.getText().toString().length() ==1) {
-            System.out.println(skriveFelt.getText());
             opdaterGalge();
             opdaterOrdOgGættedeBogstaver();
 
@@ -146,7 +147,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (galgelogik.erSpilletVundet()) {
                 lokalHighscore.add(galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver på ordet " + galgelogik.getOrdet());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
-                editor.putString("highscore", lokalHighscore.toString());
+                editor.putStringSet("highscore", lokalHighscore);
                 editor.apply();
                 Intent i = new Intent(this,VinderAktivitet.class);
                 startActivity(i);

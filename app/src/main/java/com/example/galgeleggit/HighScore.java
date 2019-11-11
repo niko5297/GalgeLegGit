@@ -1,61 +1,102 @@
 package com.example.galgeleggit;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HighScore extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    /**
-     * Benyt static variabler til at hente informationer
-     */
     public static final String prefsFile = "PrefsFile";
-    List<String> arrayList = new ArrayList<>();
-    String[] array = new String[5];
-    static int counter = 0;
+    RecyclerView recyclerView;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        stringSet = preferences.getStringSet("highScore",stringSet);
+        setContentView(R.layout.activity_high_score);
 
-        for(int i = 0; i<stringSet.size(); i++){
-
-        }
-        */
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
-        String highscore = prefs.getString("highscore", "Ingen highscore endnu");
-        //array[counter] = highscore;
-        arrayList.add(highscore);
-        arrayList.toArray();
+        Set<String> highscore = prefs.getStringSet("highscore", null);
+        List<String> list = new ArrayList<>(highscore);
+
+        System.out.println(highscore);
+        System.out.println(list);
        try {
-           //ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, game.getLokalHighscore());
-           ArrayAdapter<String> itemsAdapter =
-                   new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-           ListView listView = new ListView(this);
-           listView.setOnItemClickListener(this);
-           listView.setAdapter(itemsAdapter);
-           itemsAdapter.notifyDataSetChanged();
+           recyclerView = findViewById(R.id.recyclerview);
+           Collections.sort(list);
+           System.out.println(highscore);
 
-
-           setContentView(listView);
+           recyclerView.setLayoutManager(new LinearLayoutManager(this));
+           adapter = new Adapter(this, list);
+           recyclerView.setAdapter(adapter);
        }catch (NullPointerException e){
            e.printStackTrace();
        }
-        //counter++;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.game_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id){
+            case R.id.hjælp:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Hjælp");
+                dialog.setIcon(R.drawable.ic_help_black_24dp);
+                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
+                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
+                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
+                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
+                        "Held og lykke.");
+                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+                dialog.show();
+                break;
+            case R.id.highscore:
+                Intent i = new Intent(this,HighScore.class);
+                startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onItemClick(AdapterView<?> liste, View v, int position, long id) {
