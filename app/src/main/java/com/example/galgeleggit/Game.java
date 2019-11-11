@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
-    static Galgelogik galgelogik = new Galgelogik();
+    public static Galgelogik galgelogik;
     TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
@@ -41,6 +41,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        galgelogik = MainActivity.galgelogik;
 
         tjekBogstav = findViewById(R.id.tjekBogstav);
         ord = findViewById(R.id.ord);
@@ -135,7 +136,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
     private void opdaterOrdOgGættedeBogstaver() {
-        ord.setText("Gæt ordet: " + galgelogik.getSynligtOrd() + "\n\n");
+        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd() + "\n\n");
         if (galgelogik.getBrugteBogstaver().size()>0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
                 gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());

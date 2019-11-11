@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
-    Game game;
+    MainActivity mainActivity;
     Button nytspil, tilbage;
     TextView vinder;
 
@@ -31,8 +31,8 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         vinder = findViewById(R.id.vinder);
 
         vinder.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
-                "Ordet du har gættet er: " + game.galgelogik.getOrdet() +
-        "\nog du fik kun " +game.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
+                "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
+        "\nog du fik kun " +MainActivity.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
 
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
@@ -77,7 +77,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         if (view == nytspil){
-            game.galgelogik.nulstil();
+            mainActivity.galgelogik.nulstil();
             Intent i = new Intent(this,Game.class);
             startActivity(i);
         }

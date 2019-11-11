@@ -33,7 +33,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         taber = findViewById(R.id.taber);
 
         taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
-                "Ordet du skulle have gættet var: " + game.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
+                "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
 
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
@@ -75,7 +75,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view == nytspil){
-            game.galgelogik.nulstil();
+            MainActivity.galgelogik.nulstil();
             Intent i = new Intent(this,Game.class);
             startActivity(i);
 
