@@ -17,7 +17,6 @@ import static com.example.galgeleggit.Game.galgelogik;
 
 public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
 
-    Game game;
     Button nytspil, tilbage;
     TextView taber;
 
@@ -76,14 +75,17 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         if (view == nytspil){
             MainActivity.galgelogik.nulstil();
+            Game.setAntalForkerteGæt(0);
             Intent i = new Intent(this,Game.class);
             startActivity(i);
+            finish();
 
         }
 
         if (view == tilbage){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
     }
 }

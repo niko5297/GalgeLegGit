@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
-    MainActivity mainActivity;
     Button nytspil, tilbage;
     TextView vinder;
+    static VinderAktivitet synligAktivitet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_vinder_aktivitet);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        synligAktivitet = this;
 
         nytspil = findViewById(R.id.nytspil2);
         tilbage = findViewById(R.id.tilStart);
@@ -46,6 +47,11 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onDestroy() {
+        synligAktivitet = null;
+        super.onDestroy();
+    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -77,14 +83,17 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         if (view == nytspil){
-            mainActivity.galgelogik.nulstil();
+            MainActivity.galgelogik.nulstil();
+            Game.setAntalForkerteGæt(0);
             Intent i = new Intent(this,Game.class);
             startActivity(i);
+            finish();
         }
 
         if (view == tilbage){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
 
     }

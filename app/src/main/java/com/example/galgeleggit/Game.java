@@ -52,6 +52,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startNytSpil.setOnClickListener(this);
         tjekBogstav.setOnClickListener(this);
 
+        visGalge();
+        if (galgelogik.erSpilletSlut()){
+            galgelogik.nulstil();
+            antalForkerteGæt=0;
+            billede.setImageDrawable(null);
+            opdaterOrdOgGættedeBogstaver();
+        }
+
 
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
 
@@ -152,11 +160,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 editor.apply();
                 Intent i = new Intent(this,VinderAktivitet.class);
                 startActivity(i);
+                finish();
 
             }
             if (galgelogik.erSpilletTabt()) {
                 Intent i = new Intent(this,TaberAktivitet.class);
                 startActivity(i);
+                finish();
             }
         }
         else {
@@ -192,5 +202,28 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
 
         }
+    }
+
+    private void visGalge(){
+        switch (antalForkerteGæt){
+            case 1: billede.setImageResource(R.drawable.galge);
+                break;
+            case 2: billede.setImageResource(R.drawable.forkert1);
+                break;
+            case 3: billede.setImageResource(R.drawable.forkert2);
+                break;
+            case 4: billede.setImageResource(R.drawable.forkert3);
+                break;
+            case 5: billede.setImageResource(R.drawable.forkert4);
+                break;
+            case 6: billede.setImageResource(R.drawable.forkert5);
+                break;
+            case 7: billede.setImageResource(R.drawable.forkert6);
+                break;
+        }
+    }
+
+    public static void setAntalForkerteGæt(int antalForkerteGæt) {
+        Game.antalForkerteGæt = antalForkerteGæt;
     }
 }
