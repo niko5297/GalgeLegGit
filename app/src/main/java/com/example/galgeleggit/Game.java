@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
-    static Galgelogik galgelogik = new Galgelogik();
+    public static Galgelogik galgelogik;
     TextView ord, gættedeBogstaver;
     EditText skriveFelt;
     ImageView billede;
@@ -41,6 +41,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        galgelogik = MainActivity.galgelogik;
 
         tjekBogstav = findViewById(R.id.tjekBogstav);
         ord = findViewById(R.id.ord);
@@ -50,6 +51,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startNytSpil = findViewById(R.id.nytSpil);
         startNytSpil.setOnClickListener(this);
         tjekBogstav.setOnClickListener(this);
+
+        visGalge();
+        if (galgelogik.erSpilletSlut()){
+            galgelogik.nulstil();
+            antalForkerteGæt=0;
+            billede.setImageDrawable(null);
+            opdaterOrdOgGættedeBogstaver();
+        }
 
 
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
@@ -135,7 +144,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
     private void opdaterOrdOgGættedeBogstaver() {
-        ord.setText("Gæt ordet: " + galgelogik.getSynligtOrd() + "\n\n");
+        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd() + "\n\n");
         if (galgelogik.getBrugteBogstaver().size()>0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
                 gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
@@ -151,11 +160,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 editor.apply();
                 Intent i = new Intent(this,VinderAktivitet.class);
                 startActivity(i);
+                finish();
 
             }
             if (galgelogik.erSpilletTabt()) {
                 Intent i = new Intent(this,TaberAktivitet.class);
                 startActivity(i);
+                finish();
             }
         }
         else {
@@ -191,5 +202,28 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
 
         }
+    }
+
+    private void visGalge(){
+        switch (antalForkerteGæt){
+            case 1: billede.setImageResource(R.drawable.galge);
+                break;
+            case 2: billede.setImageResource(R.drawable.forkert1);
+                break;
+            case 3: billede.setImageResource(R.drawable.forkert2);
+                break;
+            case 4: billede.setImageResource(R.drawable.forkert3);
+                break;
+            case 5: billede.setImageResource(R.drawable.forkert4);
+                break;
+            case 6: billede.setImageResource(R.drawable.forkert5);
+                break;
+            case 7: billede.setImageResource(R.drawable.forkert6);
+                break;
+        }
+    }
+
+    public static void setAntalForkerteGæt(int antalForkerteGæt) {
+        Game.antalForkerteGæt = antalForkerteGæt;
     }
 }

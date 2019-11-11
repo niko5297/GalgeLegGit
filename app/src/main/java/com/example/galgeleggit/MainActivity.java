@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button start;
+    private AsyncTask asyncTask;
+    public static Galgelogik galgelogik = new Galgelogik();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    galgelogik.hentOrdFraDr();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Hentet ord fra DR gennemført";
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                asyncTask = null;
+            }
+        };
+        asyncTask.execute();
     }
 
     @Override
