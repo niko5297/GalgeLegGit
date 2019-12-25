@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     //TODO: Man skal kunne vælge noget ud fra en liste. Vælg hvorvidt det skal være ord fra DR eller andre.
-    //TODO: Vis animation
+    //TODO: Vis animation -> Logoet der vises ved tab/vind, så hurtigt spinne rundt
     //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
     //TODO: Se nedenfor
     /**
