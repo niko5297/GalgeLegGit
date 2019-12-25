@@ -21,6 +21,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AsyncTask asyncTask;
     public static Galgelogik galgelogik = new Galgelogik();
 
+    /**
+     * ALLE MANGLENDE RETININGSLINJER TILFØJES HER
+     * @param savedInstanceState
+     */
+
+    //TODO: Man skal kunne vælge noget ud fra en liste. Vælg hvorvidt det skal være ord fra DR eller andre.
+    //TODO: Afspil lyd når du vinder og taber
+    //TODO: Vis animation
+    //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
+    //TODO: Se nedenfor
+    /**
+     * Krav skal være opfyldt på en meningsfuld/god måde:
+     * F.eks at en person vælger et ord på listen og så giver telefonen til sin ven, der skal gætte ordet.
+     * At gemme data, men aldrig indlæse dem igen er ikke meningsfuldt.
+     * Henter man ord fra DR skal brugeren have at vide hvad der sker og spillet skal ikke begynde før ordene er hentet
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

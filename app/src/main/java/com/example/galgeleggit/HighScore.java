@@ -38,6 +38,8 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
     RecyclerView recyclerView;
     private Adapter adapter;
 
+    //TODO: Lav en ny highscore ranking f.eks. tildeling af points efter hvor mange i træk?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
