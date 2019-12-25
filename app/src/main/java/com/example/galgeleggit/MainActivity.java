@@ -12,14 +12,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button start;
+    Spinner spinner;
     private AsyncTask asyncTask;
     public static Galgelogik galgelogik = new Galgelogik();
 
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        addSpinner();
 
         asyncTask = new AsyncTask() {
             @Override
@@ -111,5 +118,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void addSpinner() {
+        String[] ordType = {"Hent ord fra DR", "Almindelige ord"};
+        spinner = findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, android.R.id.text1, ordType);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setPrompt("Vælg din måde at spille måde");
+        spinner.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        Toast.makeText(this, "Klik på " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        Toast.makeText(this, "Intet valgt", Toast.LENGTH_SHORT).show();
     }
 }
