@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     ImageView billede;
     Button tjekBogstav, startNytSpil;
     static int antalForkerteGæt = 0;
+    private MediaPlayer mediaPlayer;
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
@@ -68,9 +70,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
 
-
-
-
+        System.out.println(galgelogik.getOrdet());
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -149,13 +149,20 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd() + "\n\n");
         if (galgelogik.getBrugteBogstaver().size()>0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
+                mediaPlayer = MediaPlayer.create(this, R.raw.points);
+                mediaPlayer.start();
                 gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
             } else {
+                mediaPlayer = MediaPlayer.create(this, R.raw.lost);
+                mediaPlayer.start();
                 gættedeBogstaver.setText("Du gættede desværre forkert... prøv igen \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
             }
 
             if (galgelogik.erSpilletVundet()) {
+                mediaPlayer = MediaPlayer.create(this, R.raw.victory);
+                mediaPlayer.setVolume(4F,4F);
+                mediaPlayer.start();
                 lokalHighscore.add(galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver på ordet " + galgelogik.getOrdet());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 editor.putStringSet("highscore", lokalHighscore);
