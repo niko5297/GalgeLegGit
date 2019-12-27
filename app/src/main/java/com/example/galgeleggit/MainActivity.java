@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button start;
     Spinner spinner;
+    private int spilleMaade;
     private AsyncTask asyncTask;
     public static Galgelogik galgelogik = new Galgelogik();
 
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         addSpinner();
 
+        /*
         asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -76,11 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         asyncTask.execute();
+         */
     }
 
     @Override
     public void onClick(View view) {
         if (view == start){
+            startSpilleMaade(spilleMaade);
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
@@ -122,25 +126,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void addSpinner() {
-        String[] ordType = {"Hent ord fra DR", "Almindelige ord"};
+        String[] ordType = {"Almindelige ord", "Hent ord fra DR"};
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, android.R.id.text1, ordType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setPrompt("Vælg din måde at spille måde");
+        spinner.setPrompt("Vælg din måde at spille på");
         spinner.setAdapter(adapter);
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        Toast.makeText(this, "Klik på " + position, Toast.LENGTH_SHORT).show();
+        spilleMaade = position;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         Toast.makeText(this, "Intet valgt", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startSpilleMaade(int spilleMaade){
+
+        if (spilleMaade == 0){
+            //TODO: Her skal du sørge for at det kun er de ord som galgeleg allerede har, bliver spillet med
+        }
+
+        if (spilleMaade == 1){
+            //TODO: Her skal du hente ord fra DR ved brug af asynctask
+        }
     }
 }
