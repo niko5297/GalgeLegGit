@@ -61,28 +61,22 @@
         app:layout_constraintTop_toBottomOf="@+id/overskrift"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/lavetAf"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:text="Dette spil er lavet af\n Nikolaj Wassmann - s185082"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/spinner"
+        style="@style/Widget.AppCompat.Spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_height="?attr/dropdownListPreferredItemHeight"
+        android:layout_margin="10dp"
+        android:dropDownWidth="300dp"
+        android:background="@drawable/spinner_bg"
+        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:popupBackground="@android:color/white"
+        android:popupElevation="3dp"
         app:layout_constraintBottom_toTopOf="@+id/start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lavetAf" />
+        app:layout_constraintTop_toBottomOf="@+id/introduktion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
