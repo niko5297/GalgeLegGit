@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
 
+    /**
+     * Mulige 3. parts bibliotekker:
+     * https://android-arsenal.com/details/1/7999
+     * https://android-arsenal.com/details/1/4299
+     * https://android-arsenal.com/details/1/7991
+     * https://android-arsenal.com/details/1/7959
+     *
+     */
+
     //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
     //TODO: Se nedenfor
 
