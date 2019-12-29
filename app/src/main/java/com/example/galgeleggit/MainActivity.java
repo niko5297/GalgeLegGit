@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
 
-    //TODO: Vis animation -> Logoet der vises ved tab/vind, så hurtigt spinne rundt
     //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
     //TODO: Se nedenfor
 
