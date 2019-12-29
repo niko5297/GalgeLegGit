@@ -29,15 +29,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav, startNytSpil;
-    static int antalForkerteGæt = 0;
+    private static int antalForkerteGæt = 0;
     private MediaPlayer mediaPlayer;
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
-
-    /**
-     * Lav aktivitet for vinder og taber og før informationer over i den aktivitet
-     * @param savedInstanceState
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,19 +89,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (view == startNytSpil){
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             billede.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
-            AlertDialog.Builder tabtDialog = new AlertDialog.Builder(this);
-            tabtDialog.setTitle("Nyt spil");
-            tabtDialog.setMessage("Du har startet et nyt spil");
-            tabtDialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                }
-            });
-            tabtDialog.show();
-
         }
         skriveFelt.getText().clear();
 
