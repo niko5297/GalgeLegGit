@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import static com.example.galgeleggit.Game.galgelogik;
@@ -19,6 +22,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
 
     Button nytspil, tilbage;
     TextView taber;
+    ImageView billede;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         nytspil = findViewById(R.id.nytspil3);
         tilbage = findViewById(R.id.tilStart2);
         taber = findViewById(R.id.taber);
+        billede = findViewById(R.id.thumbs);
 
         taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
                 "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
@@ -37,6 +42,8 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         MainActivity.erSpilletIGang = false;
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
+
+        runAnimation();
     }
 
     @Override
@@ -88,5 +95,10 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
             startActivity(i);
             finish();
         }
+    }
+
+    private void runAnimation() {
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
+        billede.startAnimation(rotate);
     }
 }

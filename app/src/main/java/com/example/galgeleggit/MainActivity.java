@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        System.out.println(erSpilletIGang);
-
         addSpinner();
 
     }
