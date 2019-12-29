@@ -35,6 +35,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
                 "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
         "\nog du fik kun " +MainActivity.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
 
+        MainActivity.erSpilletIGang = false;
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
     }

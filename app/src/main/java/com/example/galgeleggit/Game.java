@@ -50,7 +50,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         tjekBogstav.setOnClickListener(this);
 
         visGalge();
-        if (galgelogik.erSpilletSlut()){
+        if (galgelogik.erSpilletSlut() || MainActivity.nytSpil){
             galgelogik.nulstil();
             antalForkerteGæt=0;
             billede.setImageDrawable(null);
@@ -89,8 +89,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (view == startNytSpil){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             billede.setImageDrawable(null);

@@ -34,6 +34,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
                 "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
 
+        MainActivity.erSpilletIGang = false;
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
     }

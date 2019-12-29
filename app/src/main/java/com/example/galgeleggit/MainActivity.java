@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ProgressDialog dialog;
     private int spilType;
     private AsyncTask asyncTask;
-    public static Galgelogik galgelogik = new Galgelogik();
+    public static boolean erSpilletIGang;
+    public static boolean nytSpil;
+    public static Galgelogik galgelogik;
     public static Galgelogik almindeligGalgeLogik = new Galgelogik();
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
@@ -35,12 +37,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //TODO: Vis animation -> Logoet der vises ved tab/vind, så hurtigt spinne rundt
     //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
     //TODO: Se nedenfor
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (erSpilletIGang){
+            fortsaet.setEnabled(true);
+        }
+        else fortsaet.setEnabled(false);
+    }
+
     /**
      * Krav skal være opfyldt på en meningsfuld/god måde:
      * F.eks at en person vælger et ord på listen og så giver telefonen til sin ven, der skal gætte ordet.
      * At gemme data, men aldrig indlæse dem igen er ikke meningsfuldt.
      * Henter man ord fra DR skal brugeren have at vide hvad der sker og spillet skal ikke begynde før ordene er hentet
      */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        System.out.println(erSpilletIGang);
+
         addSpinner();
 
     }
@@ -62,7 +77,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view == start){
+            erSpilletIGang = true;
             startSpilleType(spilType);
+            nytSpil = true;
+            Intent i = new Intent(this, Game.class);
+            startActivity(i);
+        }
+
+        if (view == fortsaet){
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
@@ -175,11 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             galgelogik = drGalgeLogik;
         }
 
-    }
-
-    private boolean fortsaetSpil (){
-
-       return true;
     }
 
 
