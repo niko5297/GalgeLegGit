@@ -45,28 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * https://android-arsenal.com/details/1/4299
      * https://android-arsenal.com/details/1/7991
      * https://android-arsenal.com/details/1/7959
-     *
      */
 
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
     //TODO: Tilføj nr 4 3. parts bibliotek, sådan at man kan starte en nyt spil direkte fra vinder/taber og i game aktivitet
-    //TODO: Se nedenfor
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (erSpilletIGang){
-            fortsaet.setEnabled(true);
-        }
-        else fortsaet.setEnabled(false);
-    }
-
-    /**
-     * Krav skal være opfyldt på en meningsfuld/god måde:
-     * F.eks at en person vælger et ord på listen og så giver telefonen til sin ven, der skal gætte ordet.
-     * At gemme data, men aldrig indlæse dem igen er ikke meningsfuldt.
-     * Henter man ord fra DR skal brugeren have at vide hvad der sker og spillet skal ikke begynde før ordene er hentet
-     */
 
 
     @Override
@@ -84,6 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         addSpinner();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (erSpilletIGang){
+            fortsaet.setEnabled(true);
+        }
+        else fortsaet.setEnabled(false);
     }
 
     @Override
