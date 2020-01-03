@@ -1,9 +1,6 @@
 package com.example.galgeleggit;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,16 +14,27 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.jinatonic.confetti.CommonConfetti;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.OnCancelListener;
+import com.shreyaspatil.MaterialDialog.interfaces.OnDismissListener;
+import com.shreyaspatil.MaterialDialog.interfaces.OnShowListener;
 
-public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
+public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener, OnShowListener, OnCancelListener, OnDismissListener {
 
     Button nytspil, tilbage;
+    private MaterialDialog mSimpleDialog;
     ViewGroup container;
     TextView vinder;
     ImageView billede;
     static VinderAktivitet synligAktivitet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +54,29 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
                 "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
         "\nog du fik kun " +MainActivity.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
 
-        MainActivity.erSpilletIGang = false;
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
+
+        // Simple Material Dialog
+        mSimpleDialog = new MaterialDialog.Builder(this)
+                .setTitle("Delete?")
+                .setMessage("Are you sure want to delete this file?")
+                .setCancelable(false)
+                .setPositiveButton("Delete", R.drawable.ic_delete_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancel", R.drawable.ic_close_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
 
         runAnimation();
         runConfetti();
@@ -94,18 +122,25 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View view) {
 
+
         if (view == nytspil){
+            mSimpleDialog.show();
+            /*
             MainActivity.galgelogik.nulstil();
             Game.setAntalForkerteGæt(0);
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
+
+             */
         }
 
         if (view == tilbage){
+            MainActivity.erSpilletIGang = false;
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
@@ -125,5 +160,20 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
                 CommonConfetti.rainingConfetti(container, new int[] {Color.RED, Color.BLACK, Color.GREEN, Color.BLUE, Color.YELLOW}).stream(3000);
             }
         });
+    }
+
+    @Override
+    public void onCancel(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
+
+    }
+
+    @Override
+    public void onDismiss(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
+
+    }
+
+    @Override
+    public void onShow(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
+
     }
 }
