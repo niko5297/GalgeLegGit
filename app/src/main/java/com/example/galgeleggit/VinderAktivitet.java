@@ -6,19 +6,24 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.jinatonic.confetti.CommonConfetti;
+
 public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
     Button nytspil, tilbage;
+    ViewGroup container;
     TextView vinder;
     ImageView billede;
     static VinderAktivitet synligAktivitet;
@@ -35,6 +40,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         tilbage = findViewById(R.id.tilStart);
         vinder = findViewById(R.id.vinder);
         billede = findViewById(R.id.trophy);
+        container = findViewById(R.id.container);
 
         vinder.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
                 "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
@@ -45,6 +51,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         tilbage.setOnClickListener(this);
 
         runAnimation();
+        runConfetti();
     }
 
 
@@ -109,5 +116,14 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     private void runAnimation (){
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_image);
         billede.startAnimation(rotate);
+    }
+
+    private void runConfetti() {
+        container.post(new Runnable() {
+            @Override
+            public void run() {
+                CommonConfetti.rainingConfetti(container, new int[] {Color.RED, Color.BLACK, Color.GREEN, Color.BLUE, Color.YELLOW}).stream(3000);
+            }
+        });
     }
 }
