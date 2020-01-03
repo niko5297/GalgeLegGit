@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *
      */
 
-    //TODO: Brug 3. parts bibliotek f.eks. konfetti. Kig på Android Arsenal
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
+    //TODO: Tilføj nr 4 3. parts bibliotek, sådan at man kan starte en nyt spil direkte fra vinder/taber og i game aktivitet
     //TODO: Se nedenfor
 
     @Override
