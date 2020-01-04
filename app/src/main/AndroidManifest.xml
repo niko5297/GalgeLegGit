@@ -15,7 +15,7 @@
         <activity android:name=".VinderAktivitet" />
         <activity android:name=".HighScore" />
         <activity android:name=".Game" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
