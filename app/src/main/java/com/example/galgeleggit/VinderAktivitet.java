@@ -26,14 +26,13 @@ import com.shreyaspatil.MaterialDialog.interfaces.OnCancelListener;
 import com.shreyaspatil.MaterialDialog.interfaces.OnDismissListener;
 import com.shreyaspatil.MaterialDialog.interfaces.OnShowListener;
 
-public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener, OnShowListener, OnCancelListener, OnDismissListener {
+public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
     Button nytspil, tilbage;
     private MaterialDialog mSimpleDialog;
     ViewGroup container;
     TextView vinder;
     ImageView billede;
-    static VinderAktivitet synligAktivitet;
 
 
     @Override
@@ -42,7 +41,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_vinder_aktivitet);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        synligAktivitet = this;
 
         nytspil = findViewById(R.id.nytspil2);
         tilbage = findViewById(R.id.tilStart);
@@ -57,27 +55,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
 
-        // Simple Material Dialog
-        mSimpleDialog = new MaterialDialog.Builder(this)
-                .setTitle("Delete?")
-                .setMessage("Are you sure want to delete this file?")
-                .setCancelable(false)
-                .setPositiveButton("Delete", R.drawable.ic_delete_black_24dp, new MaterialDialog.OnClickListener() {
-                    @Override
-                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "Deleted!", Toast.LENGTH_SHORT).show();
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setNegativeButton("Cancel", R.drawable.ic_close_black_24dp, new MaterialDialog.OnClickListener() {
-                    @Override
-                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
-                        Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
-                        dialogInterface.dismiss();
-                    }
-                })
-                .build();
-
         runAnimation();
         runConfetti();
     }
@@ -90,11 +67,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    protected void onDestroy() {
-        synligAktivitet = null;
-        super.onDestroy();
-    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -128,6 +100,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
 
         if (view == nytspil){
+            buildDialog();
             mSimpleDialog.show();
             /*
             MainActivity.galgelogik.nulstil();
@@ -162,18 +135,38 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    @Override
-    public void onCancel(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
+    private void setNytspil() {
+        MainActivity.galgelogik.nulstil();
+        Game.setAntalForkerteGæt(0);
+        Intent i = new Intent(this,Game.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void buildDialog(){
+        // Simple Material Dialog
+        mSimpleDialog = new MaterialDialog.Builder(this)
+                .setTitle("Nyt spil?")
+                .setMessage("Vil du gerne starte en nyt spil?")
+                .setCancelable(false)
+                .setPositiveButton("Helt sikkert", R.drawable.ic_done_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Nyt spil!", Toast.LENGTH_SHORT).show();
+                        setNytspil();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("Ellers tak", R.drawable.ic_close_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        Toast.makeText(getApplicationContext(), "Annulleret!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
 
     }
 
-    @Override
-    public void onDismiss(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
 
-    }
-
-    @Override
-    public void onShow(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface) {
-
-    }
 }

@@ -25,7 +25,7 @@ import java.util.Set;
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     public static Galgelogik galgelogik;
-    TextView ord, gættedeBogstaver;
+    TextView ord, gættedeBogstaver, skiftetekst;
     EditText skriveFelt;
     ImageView billede;
     Button tjekBogstav, startNytSpil;
@@ -43,6 +43,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         tjekBogstav = findViewById(R.id.tjekBogstav);
         ord = findViewById(R.id.ord);
         gættedeBogstaver = findViewById(R.id.gættedeBogstaver);
+        skiftetekst = findViewById(R.id.skiftetekst);
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
         startNytSpil = findViewById(R.id.nytSpil);
@@ -132,17 +133,19 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
     private void opdaterOrdOgGættedeBogstaver() {
-        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd() + "\n\n");
+        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size()>0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
                 mediaPlayer.start();
-                gættedeBogstaver.setText("Du gættede rigigt! \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+                skiftetekst.setText("Tillykke!! Du gættede rigigt!");
+                gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
 
             } else {
                 mediaPlayer = MediaPlayer.create(this, R.raw.lost);
                 mediaPlayer.start();
-                gættedeBogstaver.setText("Du gættede desværre forkert... prøv igen \n\nDu har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+                skiftetekst.setText("Du gættede desværre forkert... Prøv igen.");
+                gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
             }
 
             if (galgelogik.erSpilletVundet()) {
