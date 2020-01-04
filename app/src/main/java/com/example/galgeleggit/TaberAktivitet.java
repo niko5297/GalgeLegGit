@@ -82,19 +82,19 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (view == nytspil){
+        if (view == nytspil) {
             MainActivity.erSpilletIGang = true;
             MainActivity.nytSpil = false;
             MainActivity.galgelogik.nulstil();
             Game.setAntalForkerteGæt(0);
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
 
         }
 
-        if (view == tilbage){
-            Intent i = new Intent(this,MainActivity.class);
+        if (view == tilbage) {
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }

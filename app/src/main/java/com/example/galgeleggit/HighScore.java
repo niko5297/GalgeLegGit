@@ -54,17 +54,17 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
 
         System.out.println(highscore);
         System.out.println(list);
-       try {
-           recyclerView = findViewById(R.id.recyclerview);
-           Collections.sort(list);
-           System.out.println(highscore);
+        try {
+            recyclerView = findViewById(R.id.recyclerview);
+            Collections.sort(list);
+            System.out.println(highscore);
 
-           recyclerView.setLayoutManager(new LinearLayoutManager(this));
-           adapter = new Adapter(this, list);
-           recyclerView.setAdapter(adapter);
-       }catch (NullPointerException e){
-           e.printStackTrace();
-       }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new Adapter(this, list);
+            recyclerView.setAdapter(adapter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -78,7 +78,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.hjælp:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Hjælp");
@@ -95,7 +95,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
                 dialog.show();
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this,HighScore.class);
+                Intent i = new Intent(this, HighScore.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);

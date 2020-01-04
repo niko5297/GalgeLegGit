@@ -17,7 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,14 +52,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         tjekBogstav.setOnClickListener(this);
 
         visGalge();
-        if (galgelogik.erSpilletSlut() || MainActivity.nytSpil){
+        if (galgelogik.erSpilletSlut() || MainActivity.nytSpil) {
             galgelogik.nulstil();
-            antalForkerteGæt=0;
+            antalForkerteGæt = 0;
             billede.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
             visGalge();
         }
-
 
 
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
@@ -80,22 +80,22 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() < 1){
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() < 1) {
             skriveFelt.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() > 1){
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() > 1) {
             skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() ==1) {
+        if (view == tjekBogstav && skriveFelt.getText().toString().length() == 1) {
             opdaterGalge();
             opdaterOrdOgGættedeBogstaver();
 
 
         }
 
-        if (view == startNytSpil){
+        if (view == startNytSpil) {
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             billede.setImageDrawable(null);
@@ -105,6 +105,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -116,7 +117,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.hjælp:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Hjælp");
@@ -133,14 +134,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 dialog.show();
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this,HighScore.class);
+                Intent i = new Intent(this, HighScore.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void opdaterOrdOgGættedeBogstaver() {
+        gemProcess();
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
-        if (galgelogik.getBrugteBogstaver().size()>0) {
+        if (galgelogik.getBrugteBogstaver().size() > 0) {
             if (galgelogik.erSidsteBogstavKorrekt()) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
                 mediaPlayer.start();
@@ -156,78 +159,99 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
             if (galgelogik.erSpilletVundet()) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
-                mediaPlayer.setVolume(4F,4F);
+                mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
                 lokalHighscore.add(galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver på ordet " + galgelogik.getOrdet());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 editor.putStringSet("highscore", lokalHighscore);
                 editor.apply();
-                Intent i = new Intent(this,VinderAktivitet.class);
+                Intent i = new Intent(this, VinderAktivitet.class);
                 startActivity(i);
                 finish();
 
             }
             if (galgelogik.erSpilletTabt()) {
-                Intent i = new Intent(this,TaberAktivitet.class);
+                Intent i = new Intent(this, TaberAktivitet.class);
                 startActivity(i);
                 finish();
             }
-        }
-        else {
+        } else {
             gættedeBogstaver.setText(getString(R.string.gættedeBogstaverStart) + " " + galgelogik.getBrugteBogstaver());
         }
 
     }
 
-    private void opdaterGalge(){
+    private void opdaterGalge() {
         boolean brugtBogstav = false;
-        if (galgelogik.getBrugteBogstaver().contains(skriveFelt.getText().toString())){
+        if (galgelogik.getBrugteBogstaver().contains(skriveFelt.getText().toString())) {
             brugtBogstav = true;
         }
         galgelogik.gætBogstav(skriveFelt.getText().toString());
-        if(!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
+        if (!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
             antalForkerteGæt++;
 
-            switch (antalForkerteGæt){
-                case 1: billede.setImageResource(R.drawable.galge);
+            switch (antalForkerteGæt) {
+                case 1:
+                    billede.setImageResource(R.drawable.galge);
                     break;
-                case 2: billede.setImageResource(R.drawable.forkert1);
+                case 2:
+                    billede.setImageResource(R.drawable.forkert1);
                     break;
-                case 3: billede.setImageResource(R.drawable.forkert2);
+                case 3:
+                    billede.setImageResource(R.drawable.forkert2);
                     break;
-                case 4: billede.setImageResource(R.drawable.forkert3);
+                case 4:
+                    billede.setImageResource(R.drawable.forkert3);
                     break;
-                case 5: billede.setImageResource(R.drawable.forkert4);
+                case 5:
+                    billede.setImageResource(R.drawable.forkert4);
                     break;
-                case 6: billede.setImageResource(R.drawable.forkert5);
+                case 6:
+                    billede.setImageResource(R.drawable.forkert5);
                     break;
-                case 7: billede.setImageResource(R.drawable.forkert6);
+                case 7:
+                    billede.setImageResource(R.drawable.forkert6);
                     break;
             }
 
         }
     }
 
-    private void visGalge(){
-        switch (antalForkerteGæt){
-            case 1: billede.setImageResource(R.drawable.galge);
+    private void visGalge() {
+        switch (antalForkerteGæt) {
+            case 1:
+                billede.setImageResource(R.drawable.galge);
                 break;
-            case 2: billede.setImageResource(R.drawable.forkert1);
+            case 2:
+                billede.setImageResource(R.drawable.forkert1);
                 break;
-            case 3: billede.setImageResource(R.drawable.forkert2);
+            case 3:
+                billede.setImageResource(R.drawable.forkert2);
                 break;
-            case 4: billede.setImageResource(R.drawable.forkert3);
+            case 4:
+                billede.setImageResource(R.drawable.forkert3);
                 break;
-            case 5: billede.setImageResource(R.drawable.forkert4);
+            case 5:
+                billede.setImageResource(R.drawable.forkert4);
                 break;
-            case 6: billede.setImageResource(R.drawable.forkert5);
+            case 6:
+                billede.setImageResource(R.drawable.forkert5);
                 break;
-            case 7: billede.setImageResource(R.drawable.forkert6);
+            case 7:
+                billede.setImageResource(R.drawable.forkert6);
                 break;
         }
     }
 
     public static void setAntalForkerteGæt(int antalForkerteGæt) {
         Game.antalForkerteGæt = antalForkerteGæt;
+    }
+
+    private void gemProcess() {
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(galgelogik);
+        editor.putString("MyObject", json);
+        editor.apply();
     }
 }

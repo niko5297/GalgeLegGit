@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    public ViewGroup container;
     Button start;
     Button fortsaet;
     Spinner spinner;
@@ -36,17 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik almindeligGalgeLogik = new Galgelogik();
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
+    //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
     /**
-     * Mulige 3. parts bibliotekker:
-     * https://android-arsenal.com/details/1/7999
-     * https://android-arsenal.com/details/1/4299
-     * https://android-arsenal.com/details/1/7991
-     * https://android-arsenal.com/details/1/7959
+     * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
+     *
+     * @param savedInstanceState
      */
-
-    //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
-    //TODO: Tilføj nr 4 3. parts bibliotek, sådan at man kan starte en nyt spil direkte fra vinder/taber og i game aktivitet
 
 
     @Override
@@ -69,15 +65,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (erSpilletIGang){
+        if (erSpilletIGang) {
             fortsaet.setEnabled(true);
-        }
-        else fortsaet.setEnabled(false);
+        } else fortsaet.setEnabled(false);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == start){
+        if (view == start) {
             erSpilletIGang = true;
             startSpilleType(spilType);
             nytSpil = true;
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
         }
 
-        if (view == fortsaet){
+        if (view == fortsaet) {
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
@@ -102,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.hjælp:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Hjælp");
@@ -119,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dialog.show();
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this,HighScore.class);
+                Intent i = new Intent(this, HighScore.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -145,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Spillemåde 0 = Almindelig, Spillemåde 1 = Ord fra DR
         spilType = position;
 
-        if (position == 1){
+        if (position == 1) {
             asyncTask = new AsyncTask() {
 
                 @Override
@@ -186,14 +181,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "Intet valgt", Toast.LENGTH_SHORT).show();
     }
 
-    private void startSpilleType (int spilType) {
+    private void startSpilleType(int spilType) {
 
-        if (spilType == 0){
+        if (spilType == 0) {
 
             galgelogik = almindeligGalgeLogik;
         }
 
-        if (spilType == 1){
+        if (spilType == 1) {
 
             galgelogik = drGalgeLogik;
         }

@@ -50,7 +50,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
         vinder.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
                 "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
-        "\nog du fik kun " +MainActivity.galgelogik.getAntalForkerteBogstaver() +" forkerte bogstaver");
+                "\nog du fik kun " + MainActivity.galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver");
 
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
@@ -101,7 +101,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
 
-        if (view == nytspil){
+        if (view == nytspil) {
             buildDialog();
             mSimpleDialog.show();
             /*
@@ -114,15 +114,15 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
              */
         }
 
-        if (view == tilbage){
-            Intent i = new Intent(this,MainActivity.class);
+        if (view == tilbage) {
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }
 
     }
 
-    private void runAnimation (){
+    private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_image);
         billede.startAnimation(rotate);
     }
@@ -131,7 +131,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         container.post(new Runnable() {
             @Override
             public void run() {
-                CommonConfetti.rainingConfetti(container, new int[] {Color.RED, Color.BLACK, Color.GREEN, Color.BLUE, Color.YELLOW}).stream(3000);
+                CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLACK, Color.GREEN, Color.BLUE, Color.YELLOW}).stream(3000);
             }
         });
     }
@@ -141,12 +141,12 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         MainActivity.nytSpil = false;
         MainActivity.galgelogik.nulstil();
         Game.setAntalForkerteGæt(0);
-        Intent i = new Intent(this,Game.class);
+        Intent i = new Intent(this, Game.class);
         startActivity(i);
         finish();
     }
 
-    private void buildDialog(){
+    private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)
                 .setTitle("Nyt spil?")
