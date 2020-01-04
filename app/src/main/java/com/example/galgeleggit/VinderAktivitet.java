@@ -55,6 +55,8 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
 
+        MainActivity.erSpilletIGang = false;
+
         runAnimation();
         runConfetti();
     }
@@ -113,7 +115,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         }
 
         if (view == tilbage){
-            MainActivity.erSpilletIGang = false;
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
@@ -136,6 +137,8 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setNytspil() {
+        MainActivity.erSpilletIGang = true;
+        MainActivity.nytSpil = false;
         MainActivity.galgelogik.nulstil();
         Game.setAntalForkerteGæt(0);
         Intent i = new Intent(this,Game.class);

@@ -73,6 +73,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.nytSpil = false;
+    }
+
+    @Override
     public void onClick(View view) {
         if (view == tjekBogstav && skriveFelt.getText().toString().length() < 1){
             skriveFelt.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");

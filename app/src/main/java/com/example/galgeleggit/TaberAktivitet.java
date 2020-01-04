@@ -42,6 +42,8 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
 
+        MainActivity.erSpilletIGang = false;
+
         runAnimation();
     }
 
@@ -81,6 +83,8 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view == nytspil){
+            MainActivity.erSpilletIGang = true;
+            MainActivity.nytSpil = false;
             MainActivity.galgelogik.nulstil();
             Game.setAntalForkerteGæt(0);
             Intent i = new Intent(this,MainActivity.class);
@@ -90,7 +94,6 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         }
 
         if (view == tilbage){
-            MainActivity.erSpilletIGang = false;
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
