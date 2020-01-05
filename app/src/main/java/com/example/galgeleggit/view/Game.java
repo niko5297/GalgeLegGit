@@ -107,6 +107,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (view == startNytSpil) {
+            skiftetekst.setText("");
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             billede.setImageDrawable(null);

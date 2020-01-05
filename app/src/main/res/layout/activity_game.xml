@@ -28,7 +28,6 @@
         android:layout_marginBottom="190dp"
         app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

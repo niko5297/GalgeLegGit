@@ -91,8 +91,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
                 dialog.show();
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
-                startActivity(i);
+                Toast.makeText(this, "Du befinder dig allerede i Highscore", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
