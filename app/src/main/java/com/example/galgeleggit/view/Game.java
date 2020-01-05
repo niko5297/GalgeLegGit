@@ -33,7 +33,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     TextView ord, gættedeBogstaver, skiftetekst;
     EditText skriveFelt;
     ImageView billede;
-    Button tjekBogstav, startNytSpil;
+    Button tjekBogstav, startNytSpil, points;
     private static int antalForkerteGæt = 0;
     private MediaPlayer mediaPlayer;
     public static Set<String> lokalHighscore = new HashSet<>();
@@ -55,6 +55,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         skriveFelt = findViewById(R.id.skriveFelt);
         billede = findViewById(R.id.galge);
         startNytSpil = findViewById(R.id.nytSpil);
+        points = findViewById(R.id.points);
         startNytSpil.setOnClickListener(this);
         tjekBogstav.setOnClickListener(this);
 
