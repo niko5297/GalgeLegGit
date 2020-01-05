@@ -1,70 +1,50 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.example.galgeleggit.R;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
 
-public class HighScore extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    public static final String prefsFile = "PrefsFile";
-    RecyclerView recyclerView;
-    private Adapter adapter;
-
-    //TODO: Lav en ny highscore ranking f.eks. tildeling af points efter hvor mange i træk?
+    Button nytspil, tilbage;
+    TextView taber;
+    ImageView billede;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_score);
-
+        setContentView(R.layout.activity_taber_aktivitet);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
-        Set<String> highscore = prefs.getStringSet("highscore", null);
-        List<String> list = new ArrayList<>(highscore);
+        nytspil = findViewById(R.id.nytspil3);
+        tilbage = findViewById(R.id.tilStart2);
+        taber = findViewById(R.id.taber);
+        billede = findViewById(R.id.thumbs);
 
-        System.out.println(highscore);
-        System.out.println(list);
-        try {
-            recyclerView = findViewById(R.id.recyclerview);
-            Collections.sort(list);
-            System.out.println(highscore);
+        taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
+                "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new Adapter(this, list);
-            recyclerView.setAdapter(adapter);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        nytspil.setOnClickListener(this);
+        tilbage.setOnClickListener(this);
+
+        MainActivity.erSpilletIGang = false;
+
+        runAnimation();
     }
 
     @Override
@@ -74,7 +54,6 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -101,8 +80,28 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         return super.onOptionsItemSelected(item);
     }
 
-    public void onItemClick(AdapterView<?> liste, View v, int position, long id) {
-        Toast.makeText(this, "Klik på " + position, Toast.LENGTH_SHORT).show();
+    @Override
+    public void onClick(View view) {
+        if (view == nytspil) {
+            MainActivity.erSpilletIGang = true;
+            MainActivity.nytSpil = false;
+            MainActivity.galgelogik.nulstil();
+            Game.setAntalForkerteGæt(0);
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+
+        }
+
+        if (view == tilbage) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 
+    private void runAnimation() {
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
+        billede.startAnimation(rotate);
+    }
 }

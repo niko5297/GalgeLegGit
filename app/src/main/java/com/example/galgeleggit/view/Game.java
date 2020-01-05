@@ -1,4 +1,4 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.galgeleggit.R;
+import com.example.galgeleggit.model.Galgelogik;
 import com.google.gson.Gson;
 
 import java.util.HashSet;

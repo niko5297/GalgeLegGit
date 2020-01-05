@@ -1,4 +1,4 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.model;
 
 import android.content.Context;
 import android.view.LayoutInflater;

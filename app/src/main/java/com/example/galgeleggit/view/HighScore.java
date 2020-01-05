@@ -1,50 +1,62 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
-import static com.example.galgeleggit.Game.galgelogik;
+import com.example.galgeleggit.R;
+import com.example.galgeleggit.model.Adapter;
 
-public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
-    Button nytspil, tilbage;
-    TextView taber;
-    ImageView billede;
+public class HighScore extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    public static final String prefsFile = "PrefsFile";
+    RecyclerView recyclerView;
+    private Adapter adapter;
+
+    //TODO: Lav en ny highscore ranking f.eks. tildeling af points efter hvor mange i træk?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_taber_aktivitet);
+        setContentView(R.layout.activity_high_score);
+
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        nytspil = findViewById(R.id.nytspil3);
-        tilbage = findViewById(R.id.tilStart2);
-        taber = findViewById(R.id.taber);
-        billede = findViewById(R.id.thumbs);
+        SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
+        Set<String> highscore = prefs.getStringSet("highscore", null);
+        List<String> list = new ArrayList<>(highscore);
 
-        taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
-                "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
+        System.out.println(highscore);
+        System.out.println(list);
+        try {
+            recyclerView = findViewById(R.id.recyclerview);
+            Collections.sort(list);
+            System.out.println(highscore);
 
-        nytspil.setOnClickListener(this);
-        tilbage.setOnClickListener(this);
-
-        MainActivity.erSpilletIGang = false;
-
-        runAnimation();
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new Adapter(this, list);
+            recyclerView.setAdapter(adapter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,6 +66,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -80,28 +93,8 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == nytspil) {
-            MainActivity.erSpilletIGang = true;
-            MainActivity.nytSpil = false;
-            MainActivity.galgelogik.nulstil();
-            Game.setAntalForkerteGæt(0);
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            finish();
-
-        }
-
-        if (view == tilbage) {
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            finish();
-        }
+    public void onItemClick(AdapterView<?> liste, View v, int position, long id) {
+        Toast.makeText(this, "Klik på " + position, Toast.LENGTH_SHORT).show();
     }
 
-    private void runAnimation() {
-        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
-        billede.startAnimation(rotate);
-    }
 }

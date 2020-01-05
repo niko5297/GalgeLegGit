@@ -1,4 +1,4 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.view;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -20,11 +20,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.galgeleggit.R;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.shreyaspatil.MaterialDialog.interfaces.OnCancelListener;
-import com.shreyaspatil.MaterialDialog.interfaces.OnDismissListener;
-import com.shreyaspatil.MaterialDialog.interfaces.OnShowListener;
 
 public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
