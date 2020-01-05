@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
 
+    //region onCreate / onResume
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fortsaet.setEnabled(true);
         } else fortsaet.setEnabled(false);
     }
+
+    //endregion
+
+    //region onClick and menu
 
     @Override
     public void onClick(View view) {
@@ -120,7 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    //endregion
 
+    //region Spinner
     private void addSpinner() {
         String[] ordType = {"Almindelige ord", "Hent ord fra DR"};
         spinner = findViewById(R.id.spinner);
@@ -181,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "Intet valgt", Toast.LENGTH_SHORT).show();
     }
 
+    //endregion
+
+    //region Support methods
+
     private void startSpilleType(int spilType) {
 
         if (spilType == 0) {
@@ -194,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    //endregion
 
 
 }
