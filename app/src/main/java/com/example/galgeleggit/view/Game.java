@@ -167,8 +167,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
 
             } else {
-                mediaPlayer = MediaPlayer.create(this, R.raw.lost);
-                mediaPlayer.start();
                 skiftetekst.setText("Du gættede desværre forkert... Prøv igen.");
                 gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
             }
@@ -187,6 +185,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
             }
             if (galgelogik.erSpilletTabt()) {
+                mediaPlayer = MediaPlayer.create(this, R.raw.lost);
+                mediaPlayer.start();
                 Intent i = new Intent(this, TaberAktivitet.class);
                 startActivity(i);
                 finish();
