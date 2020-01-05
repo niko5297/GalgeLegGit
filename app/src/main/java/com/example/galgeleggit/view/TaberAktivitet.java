@@ -100,8 +100,13 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+
+    //region Support methods
+
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
         billede.startAnimation(rotate);
     }
+
+    //endregion
 }

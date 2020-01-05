@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //endregion
 
-    //region onClick and menu
+    //region onClick and Menu
 
     @Override
     public void onClick(View view) {

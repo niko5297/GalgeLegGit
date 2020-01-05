@@ -37,6 +37,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
+
+    //region onCreate / onPause
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         super.onPause();
         MainActivity.nytSpil = false;
     }
+
+    //endregion
+
+    //region onClick and Menu
 
     @Override
     public void onClick(View view) {
@@ -141,6 +147,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    //endregion
+
+    //region Support Methods
 
     private void opdaterOrdOgGættedeBogstaver() {
         gemProcess();
@@ -245,9 +255,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public static void setAntalForkerteGæt(int antalForkerteGæt) {
-        Game.antalForkerteGæt = antalForkerteGæt;
-    }
 
     private void gemProcess() {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
@@ -256,4 +263,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         editor.putString("MyObject", json);
         editor.apply();
     }
+
+    //endregion
+
+    //region Public methods
+
+    public static void setAntalForkerteGæt(int antalForkerteGæt) {
+        Game.antalForkerteGæt = antalForkerteGæt;
+    }
+
+    //endregion
+
+
 }

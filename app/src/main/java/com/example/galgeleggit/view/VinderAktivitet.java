@@ -120,6 +120,8 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    //region Support methods
+
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_image);
         billede.startAnimation(rotate);
@@ -169,5 +171,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    //endregion
 
 }
