@@ -70,11 +70,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/points"
         app:layout_constraintTop_toBottomOf="@id/gættedeBogstaver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Points: 0"
+        android:textAllCaps="false"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/skiftetekst"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tjekBogstav"
+        />
     
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
