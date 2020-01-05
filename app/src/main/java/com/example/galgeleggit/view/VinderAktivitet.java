@@ -105,14 +105,6 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         if (view == nytspil) {
             buildDialog();
             mSimpleDialog.show();
-            /*
-            MainActivity.galgelogik.nulstil();
-            Game.setAntalForkerteGæt(0);
-            Intent i = new Intent(this,MainActivity.class);
-            startActivity(i);
-            finish();
-
-             */
         }
 
         if (view == tilbage) {

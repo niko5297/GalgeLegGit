@@ -41,8 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //endregion
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
-    //TODO: Husk også at tilføje Alertdialog til TaberAktivitet
+    //TODO: Fjern \n i TaberAktivtet.
 
+    //TODO: Tilføj pointtavle
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.galgeleggit.R;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +28,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     Button nytspil, tilbage;
     TextView taber;
     ImageView billede;
+    private MaterialDialog mSimpleDialog;
 
     //endregion
 
@@ -84,17 +88,12 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View view) {
         if (view == nytspil) {
-            MainActivity.erSpilletIGang = true;
-            MainActivity.nytSpil = false;
-            MainActivity.galgelogik.nulstil();
-            Game.setAntalForkerteGæt(0);
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            finish();
-
+            buildDialog();
+            mSimpleDialog.show();
         }
 
         if (view == tilbage) {
@@ -104,13 +103,48 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
     //region Support methods
 
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
         billede.startAnimation(rotate);
     }
+
+    private void setNytspil() {
+        MainActivity.erSpilletIGang = true;
+        MainActivity.nytSpil = false;
+        MainActivity.galgelogik.nulstil();
+        Game.setAntalForkerteGæt(0);
+        Intent i = new Intent(this, Game.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void buildDialog() {
+        // Simple Material Dialog
+        mSimpleDialog = new MaterialDialog.Builder(this)
+                .setTitle("Nyt spil?")
+                .setMessage("Vil du gerne starte en nyt spil?")
+                .setCancelable(false)
+                .setPositiveButton("Helt sikkert", R.drawable.ic_done_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Nyt spil!", Toast.LENGTH_SHORT).show();
+                        setNytspil();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("Ellers tak", R.drawable.ic_close_black_24dp, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        Toast.makeText(getApplicationContext(), "Annulleret!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
+
+    }
+
 
     //endregion
 }
