@@ -27,6 +27,8 @@ import java.util.Set;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
+    //region Fields
+
     public static Galgelogik galgelogik;
     TextView ord, gættedeBogstaver, skiftetekst;
     EditText skriveFelt;
@@ -37,6 +39,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
+    //endregion
 
     //region onCreate / onPause
     @Override

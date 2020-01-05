@@ -26,9 +26,13 @@ import java.util.Set;
 
 public class HighScore extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    //region Fields
+
     public static final String prefsFile = "PrefsFile";
     RecyclerView recyclerView;
     private Adapter adapter;
+
+    //endregion
 
     //TODO: Lav en ny highscore ranking f.eks. tildeling af points efter hvor mange i træk?
 

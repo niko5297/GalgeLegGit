@@ -20,9 +20,13 @@ import com.example.galgeleggit.R;
 
 public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
 
+    //region Fields
+
     Button nytspil, tilbage;
     TextView taber;
     ImageView billede;
+
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

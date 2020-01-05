@@ -24,6 +24,8 @@ import com.example.galgeleggit.model.Galgelogik;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    //region Fields
+
     Button start;
     Button fortsaet;
     Spinner spinner;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik almindeligGalgeLogik = new Galgelogik();
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
+    //endregion
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
     /**

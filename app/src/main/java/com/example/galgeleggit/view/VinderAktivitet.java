@@ -26,12 +26,15 @@ import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
 
+    //region Fields
+
     Button nytspil, tilbage;
     private MaterialDialog mSimpleDialog;
     ViewGroup container;
     TextView vinder;
     ImageView billede;
 
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
