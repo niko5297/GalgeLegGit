@@ -104,6 +104,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         MainActivity.erSpilletIGang = true;
         MainActivity.nytSpil = false;
         MainActivity.galgelogik.nulstil();
+        Game.pointManager.nulstil();
         Game.setAntalForkerteGæt(0);
         Intent i = new Intent(this, Game.class);
         startActivity(i);

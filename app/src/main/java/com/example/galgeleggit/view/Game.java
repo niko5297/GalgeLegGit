@@ -37,7 +37,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private static int antalForkerteGæt = 0;
     private boolean brugtBogstav;
     private MediaPlayer mediaPlayer;
-    private static Points pointManager = new Points();
+    public static Points pointManager = new Points();
     private Help help = new Help();
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";

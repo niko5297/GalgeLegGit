@@ -50,8 +50,6 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         Set<String> highscore = prefs.getStringSet("highscore", null);
         List<String> list = new ArrayList<>(highscore);
 
-        System.out.println(highscore);
-        System.out.println(list);
         try {
             recyclerView = findViewById(R.id.recyclerview);
             Collections.sort(list);

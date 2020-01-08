@@ -125,6 +125,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         MainActivity.erSpilletIGang = true;
         MainActivity.nytSpil = false;
         MainActivity.galgelogik.nulstil();
+        Game.pointManager.nulstil();
         Game.setAntalForkerteGæt(0);
         Intent i = new Intent(this, Game.class);
         startActivity(i);

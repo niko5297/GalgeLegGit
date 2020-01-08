@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //TODO: Måske fjern alt teksten i starten og lav en knap der inflater help??
 
     //TODO: Lav måske en mulighed for at vælge et navn.
+
+    //TODO: Overvej hvorvidt der er brug for en controller til f.eks. player, help, point osv osv.
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *
