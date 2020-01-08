@@ -85,8 +85,7 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (view == backButton) {
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            onBackPressed();
             finish();
         }
     }

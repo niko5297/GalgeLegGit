@@ -96,8 +96,7 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (view == backButton) {
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            onBackPressed();
             finish();
         }
 
