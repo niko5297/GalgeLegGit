@@ -129,6 +129,10 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
         finish();
     }
 
+    /**
+     * https://android-arsenal.com/details/1/7959
+     */
+
     private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)

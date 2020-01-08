@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //TODO: Kommentarer
 
-    //FIXME: Sørg for man ikke kan benytte ,.:- osv. (specialtegn)
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *

@@ -108,6 +108,10 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
+    /**
+     * https://android-arsenal.com/details/1/7959
+     */
+
     private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)
