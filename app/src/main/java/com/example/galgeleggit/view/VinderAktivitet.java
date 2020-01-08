@@ -1,7 +1,6 @@
 package com.example.galgeleggit.view;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -58,7 +56,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
 
-        MainActivity.erSpilletIGang = false;
+        MainActivity.isGameRunning = false;
 
         runAnimation();
         runConfetti();
@@ -77,7 +75,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.hjælp:
+            case R.id.helpMenu:
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
@@ -122,8 +120,8 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setNytspil() {
-        MainActivity.erSpilletIGang = true;
-        MainActivity.nytSpil = false;
+        MainActivity.isGameRunning = true;
+        MainActivity.newGame = false;
         MainActivity.galgelogik.nulstil();
         Game.pointManager.nulstil();
         Game.setAntalForkerteGæt(0);

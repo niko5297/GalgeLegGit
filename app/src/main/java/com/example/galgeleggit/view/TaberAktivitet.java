@@ -1,11 +1,9 @@
 package com.example.galgeleggit.view;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,7 +50,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         nytspil.setOnClickListener(this);
         tilbage.setOnClickListener(this);
 
-        MainActivity.erSpilletIGang = false;
+        MainActivity.isGameRunning = false;
 
         runAnimation();
     }
@@ -68,7 +66,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.hjælp:
+            case R.id.helpMenu:
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
@@ -101,8 +99,8 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setNytspil() {
-        MainActivity.erSpilletIGang = true;
-        MainActivity.nytSpil = false;
+        MainActivity.isGameRunning = true;
+        MainActivity.newGame = false;
         MainActivity.galgelogik.nulstil();
         Game.pointManager.nulstil();
         Game.setAntalForkerteGæt(0);

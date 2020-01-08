@@ -1,13 +1,10 @@
 package com.example.galgeleggit.view;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -74,7 +71,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.hjælp:
+            case R.id.helpMenu:
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:

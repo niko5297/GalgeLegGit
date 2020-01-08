@@ -8,7 +8,7 @@
     tools:context=".view.Game">
 
     <EditText
-        android:id="@+id/skriveFelt"
+        android:id="@+id/typeField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -21,12 +21,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/galge"
+        android:id="@+id/hangmanImage"
         android:layout_width="536dp"
         android:layout_height="0dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="190dp"
-        app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
+        app:layout_constraintBottom_toTopOf="@+id/typeField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,37 +42,37 @@
     android:text="Tjek Bogstav"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/skriveFelt" />
+    app:layout_constraintStart_toEndOf="@+id/typeField" />
 
 
     <TextView
-        android:id="@+id/ord"
+        android:id="@+id/word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galge" />
+        app:layout_constraintTop_toBottomOf="@+id/hangmanImage" />
 
     <TextView
-        android:id="@+id/gættedeBogstaver"
+        android:id="@+id/guessedLetters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gættedeBogstaverStart"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/skiftetekst"
-        app:layout_constraintTop_toBottomOf="@id/ord"
+        app:layout_constraintBottom_toTopOf="@+id/switchText"
+        app:layout_constraintTop_toBottomOf="@id/word"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/skiftetekst"
+        android:id="@+id/switchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/points"
-        app:layout_constraintTop_toBottomOf="@id/gættedeBogstaver"
+        app:layout_constraintTop_toBottomOf="@id/guessedLetters"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -84,7 +84,7 @@
         android:text="Points: 0"
         android:textAllCaps="false"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/skiftetekst"
+        app:layout_constraintTop_toBottomOf="@id/switchText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tjekBogstav"

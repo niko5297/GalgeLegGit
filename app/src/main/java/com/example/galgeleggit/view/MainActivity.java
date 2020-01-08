@@ -25,22 +25,21 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
 import com.example.galgeleggit.model.Player;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     //region Fields
 
-    Button start, fortsaet, helpbutton, playername;
+    Button start, continueButton, helpbutton, playername;
     Spinner spinner;
     ProgressDialog dialog;
-    private int spilType;
+    private int gameType;
     private AsyncTask asyncTask;
     private Help help = new Help();
     private String mPlayerName;
     private Player player = Player.getInstance();
-    public static boolean erSpilletIGang;
-    public static boolean nytSpil;
+    public static boolean isGameRunning;
+    public static boolean newGame;
     public static Galgelogik galgelogik;
     public static Galgelogik almindeligGalgeLogik = new Galgelogik();
     public static Galgelogik drGalgeLogik = new Galgelogik();
@@ -50,11 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //TODO: Lav alt kode om fra dansk til engelsk
 
-    //TODO: Lav måske en mulighed for at vælge et navn.
-
-    //TODO: Lav popup ved start for at vælge et navn.
-
     //TODO: Overvej hvorvidt der er brug for en controller til f.eks. player, help, point osv osv.
+
+    //TODO: Kommentarer
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *
@@ -69,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         start = findViewById(R.id.start);
-        fortsaet = findViewById(R.id.fortsaet);
+        continueButton = findViewById(R.id.continueButton);
         playername = findViewById(R.id.playername);
         helpbutton = findViewById(R.id.help);
         playername.setOnClickListener(this);
         helpbutton.setOnClickListener(this);
-        fortsaet.setOnClickListener(this);
+        continueButton.setOnClickListener(this);
         start.setOnClickListener(this);
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
@@ -90,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (erSpilletIGang) {
-            fortsaet.setEnabled(true);
-        } else fortsaet.setEnabled(false);
+        if (isGameRunning) {
+            continueButton.setEnabled(true);
+        } else continueButton.setEnabled(false);
     }
 
     //endregion
@@ -103,14 +100,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view == start) {
             player.setName(mPlayerName);
-            erSpilletIGang = true;
-            startSpilleType(spilType);
-            nytSpil = true;
+            isGameRunning = true;
+            startGameType(gameType);
+            newGame = true;
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
 
-        if (view == fortsaet) {
+        if (view == continueButton) {
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
@@ -138,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.hjælp:
+            case R.id.helpMenu:
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
@@ -152,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //region Spinner
     private void addSpinner() {
-        String[] ordType = {"Almindelige ord", "Hent ord fra DR"};
+        String[] ordType = {"Almindelige word", "Hent word fra DR"};
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
@@ -168,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         //Spillemåde 0 = Almindelig, Spillemåde 1 = Ord fra DR
-        spilType = position;
+        gameType = position;
 
         if (position == 1) {
             asyncTask = new AsyncTask() {
@@ -191,12 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    return "Hentet ord fra DR gennemført";
+                    return "Hentet word fra DR gennemført";
                 }
 
                 @Override
                 protected void onPostExecute(Object o) {
-                    Toast.makeText(MainActivity.this, "Hentet ord fra DR gennemført", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Hentet word fra DR gennemført", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     asyncTask = null;
                 }
@@ -215,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //region Support methods
 
-    private void startSpilleType(int spilType) {
+    private void startGameType(int spilType) {
 
         if (spilType == 0) {
 

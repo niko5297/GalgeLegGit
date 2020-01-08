@@ -31,9 +31,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     //region Fields
 
     public static Galgelogik galgelogik;
-    TextView ord, gættedeBogstaver, skiftetekst;
-    EditText skriveFelt;
-    ImageView billede;
+    TextView word, guessedLetters, switchText;
+    EditText typeField;
+    ImageView hangmanImage;
     Button tjekBogstav, startNytSpil, points;
     private static int antalForkerteGæt = 0;
     private boolean brugtBogstav;
@@ -54,31 +54,31 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         galgelogik = MainActivity.galgelogik;
 
         tjekBogstav = findViewById(R.id.tjekBogstav);
-        ord = findViewById(R.id.ord);
-        gættedeBogstaver = findViewById(R.id.gættedeBogstaver);
-        skiftetekst = findViewById(R.id.skiftetekst);
-        skriveFelt = findViewById(R.id.skriveFelt);
-        billede = findViewById(R.id.galge);
+        word = findViewById(R.id.word);
+        guessedLetters = findViewById(R.id.guessedLetters);
+        switchText = findViewById(R.id.switchText);
+        typeField = findViewById(R.id.typeField);
+        hangmanImage = findViewById(R.id.hangmanImage);
         startNytSpil = findViewById(R.id.nytSpil);
         points = findViewById(R.id.points);
         startNytSpil.setOnClickListener(this);
         tjekBogstav.setOnClickListener(this);
 
         visGalge();
-        if (galgelogik.erSpilletSlut() || MainActivity.nytSpil) {
+        if (galgelogik.erSpilletSlut() || MainActivity.newGame) {
             pointManager.nulstil();
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             points.setText("Points: " + pointManager.getAntalPoints());
-            billede.setImageDrawable(null);
+            hangmanImage.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
             visGalge();
         }
 
 
-        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
 
-        gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+        guessedLetters.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
         points.setText("Points :" + pointManager.getAntalPoints());
 
@@ -92,7 +92,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
-        MainActivity.nytSpil = false;
+        MainActivity.newGame = false;
     }
 
     //endregion
@@ -101,15 +101,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() < 1) {
-            skriveFelt.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");
+        if (view == tjekBogstav && typeField.getText().toString().length() < 1) {
+            typeField.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() > 1) {
-            skriveFelt.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
+        if (view == tjekBogstav && typeField.getText().toString().length() > 1) {
+            typeField.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && skriveFelt.getText().toString().length() == 1) {
+        if (view == tjekBogstav && typeField.getText().toString().length() == 1) {
             opdaterGalge();
             opdaterOrdOgGættedeBogstaver();
 
@@ -117,15 +117,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (view == startNytSpil) {
-            skiftetekst.setText("");
+            switchText.setText("");
             galgelogik.nulstil();
             pointManager.nulstil();
             antalForkerteGæt = 0;
             points.setText("Points: " + pointManager.getAntalPoints());
-            billede.setImageDrawable(null);
+            hangmanImage.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
         }
-        skriveFelt.getText().clear();
+        typeField.getText().clear();
 
 
     }
@@ -142,7 +142,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.hjælp:
+            case R.id.helpMenu:
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
@@ -158,18 +158,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     private void opdaterOrdOgGættedeBogstaver() {
         gemProcess();
-        ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
             if (galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
                 mediaPlayer.start();
                 points.setText("Points: " + pointManager.givPoint());
-                skiftetekst.setText("Tillykke!! Du gættede rigigt!");
-                gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
+                switchText.setText("Tillykke!! Du gættede rigigt!");
+                guessedLetters.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
 
             } else {
-                skiftetekst.setText("Du gættede desværre forkert... Prøv igen.");
-                gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
+                switchText.setText("Du gættede desværre forkert... Prøv igen.");
+                guessedLetters.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
             }
 
             if (galgelogik.erSpilletVundet()) {
@@ -193,42 +193,42 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 finish();
             }
         } else {
-            gættedeBogstaver.setText(getString(R.string.gættedeBogstaverStart) + " " + galgelogik.getBrugteBogstaver());
+            guessedLetters.setText(getString(R.string.gættedeBogstaverStart) + " " + galgelogik.getBrugteBogstaver());
         }
 
     }
 
     private void opdaterGalge() {
         brugtBogstav = false;
-        if (galgelogik.getBrugteBogstaver().contains(skriveFelt.getText().toString())) {
+        if (galgelogik.getBrugteBogstaver().contains(typeField.getText().toString())) {
             brugtBogstav = true;
         }
-        galgelogik.gætBogstav(skriveFelt.getText().toString());
+        galgelogik.gætBogstav(typeField.getText().toString());
         if (!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
             points.setText("Points: " + pointManager.tagPoint());
             antalForkerteGæt++;
 
             switch (antalForkerteGæt) {
                 case 1:
-                    billede.setImageResource(R.drawable.galge);
+                    hangmanImage.setImageResource(R.drawable.galge);
                     break;
                 case 2:
-                    billede.setImageResource(R.drawable.forkert1);
+                    hangmanImage.setImageResource(R.drawable.forkert1);
                     break;
                 case 3:
-                    billede.setImageResource(R.drawable.forkert2);
+                    hangmanImage.setImageResource(R.drawable.forkert2);
                     break;
                 case 4:
-                    billede.setImageResource(R.drawable.forkert3);
+                    hangmanImage.setImageResource(R.drawable.forkert3);
                     break;
                 case 5:
-                    billede.setImageResource(R.drawable.forkert4);
+                    hangmanImage.setImageResource(R.drawable.forkert4);
                     break;
                 case 6:
-                    billede.setImageResource(R.drawable.forkert5);
+                    hangmanImage.setImageResource(R.drawable.forkert5);
                     break;
                 case 7:
-                    billede.setImageResource(R.drawable.forkert6);
+                    hangmanImage.setImageResource(R.drawable.forkert6);
                     break;
             }
 
@@ -238,25 +238,25 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private void visGalge() {
         switch (antalForkerteGæt) {
             case 1:
-                billede.setImageResource(R.drawable.galge);
+                hangmanImage.setImageResource(R.drawable.galge);
                 break;
             case 2:
-                billede.setImageResource(R.drawable.forkert1);
+                hangmanImage.setImageResource(R.drawable.forkert1);
                 break;
             case 3:
-                billede.setImageResource(R.drawable.forkert2);
+                hangmanImage.setImageResource(R.drawable.forkert2);
                 break;
             case 4:
-                billede.setImageResource(R.drawable.forkert3);
+                hangmanImage.setImageResource(R.drawable.forkert3);
                 break;
             case 5:
-                billede.setImageResource(R.drawable.forkert4);
+                hangmanImage.setImageResource(R.drawable.forkert4);
                 break;
             case 6:
-                billede.setImageResource(R.drawable.forkert5);
+                hangmanImage.setImageResource(R.drawable.forkert5);
                 break;
             case 7:
-                billede.setImageResource(R.drawable.forkert6);
+                hangmanImage.setImageResource(R.drawable.forkert6);
                 break;
         }
     }
