@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -25,6 +26,7 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
 import com.example.galgeleggit.model.Player;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -45,17 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
     //endregion
-    //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
-
-    //TODO: Overvej hvorvidt der er brug for en controller til f.eks. player, help, point osv osv.
-
     //TODO: Kommentarer
-
-    /**
-     * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
-     *
-     * @param savedInstanceState
-     */
 
 
     //region onCreate / onResume

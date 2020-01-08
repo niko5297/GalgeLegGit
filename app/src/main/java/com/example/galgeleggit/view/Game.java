@@ -157,7 +157,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     //region Support Methods
 
     private void updateWordAndGuessedLetters() {
-        saveProcess();
         word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
             if (galgelogik.erSidsteBogstavKorrekt() && !usedLetter) {
@@ -259,15 +258,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 hangmanImage.setImageResource(R.drawable.forkert6);
                 break;
         }
-    }
-
-
-    private void saveProcess() {
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(galgelogik);
-        editor.putString("MyObject", json);
-        editor.apply();
     }
 
     //endregion
