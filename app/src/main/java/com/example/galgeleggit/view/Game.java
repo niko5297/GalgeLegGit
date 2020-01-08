@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.ArraySet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +42,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private Player player = Player.getInstance();
     public static Points pointManager = new Points();
     private Help help = new Help();
-    public static Set<String> localHighscore = new HashSet<>();
+    public static Set<String> localHighscoreName = new ArraySet<>();
+    public static Set<String> localHighscore = new ArraySet<>();
     public static final String prefsFile = "PrefsFile";
 
     //endregion
@@ -175,10 +177,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
+                SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
+                localHighscoreName.add((player.getName() + ": "));
+                localHighscore.add(pointManager.getNumberOfPoints()+"");
+                editor.putString("name", player.getName() + ": ");
+                editor.putString("highscore", pointManager.getNumberOfPoints()+"");
+                editor.apply();
+                /*
                 localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 editor.putStringSet("highscore", localHighscore);
                 editor.apply();
+                 */
                 Intent i = new Intent(this, WinnerActivity.class);
                 startActivity(i);
                 finish();

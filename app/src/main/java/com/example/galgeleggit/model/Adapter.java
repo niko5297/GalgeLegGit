@@ -18,13 +18,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
      * Kilde:
      */
 
-    private List<String> mData;
+    private List<String> name;
+    private List<String> highscore;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public Adapter(Context context, List<String> data) {
+    public Adapter(Context context, List<String> name, List<String> highscore) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.name = name;
+        this.highscore = highscore;
     }
 
     // inflates the row layout from xml when needed
@@ -37,24 +39,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String highscore = mData.get(position);
-        holder.textView.setText(highscore);
+        try {
+           // if (name.get(position))
+            holder.name.setText(name.get(position));
+            holder.highscore.setText(highscore.get(position));
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return highscore.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView name, highscore;
+
 
         ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textViewHighscore);
+            name = itemView.findViewById(R.id.highscoreName);
+            highscore =  itemView.findViewById(R.id.highscorePoints);
         }
 
     }

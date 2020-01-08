@@ -49,6 +49,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //endregion
     //TODO: Kommentarer
 
+    /**
+     * SPØRG OM DET ER OKAY AT DU LAVER ENDNU EN ARRAYLIST OG SORTERE DEN? I STEDET FOR AT SORTERE TO FORSKELLIGE LISTER
+     */
+
+    /**
+     * Der skal være en liste (f.eks. et RecyclerView der viser en highscoreliste).
+     * Listens elementer har flere varierende views (f.eks. scoren, ordet og tidspunktet
+     * det gælder ikke at formattere det hele i én enkelt streng og bare vise én streng per listeelement)
+     * @param savedInstanceState
+     */
+
 
     //region onCreate / onResume
     @Override
@@ -139,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //region Spinner
     private void addSpinner() {
-        String[] ordType = {"Almindelige word", "Hent word fra DR"};
+        String[] ordType = {"Almindelige ord", "Hent word fra DR"};
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
@@ -239,6 +250,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 mPlayerName = input.getText().toString();
                 player.setName(mPlayerName);
+
+                if (player.getName().equals("")){
+                    Toast.makeText(MainActivity.this, "Du har ikke valgt noget spille navn! Vælg et", Toast.LENGTH_SHORT).show();
+                    choosePlayerName();
+                }
             }
         });
         builder.show();

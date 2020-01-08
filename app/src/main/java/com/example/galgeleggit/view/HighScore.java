@@ -30,6 +30,8 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
     RecyclerView recyclerView;
     private Adapter adapter;
     private Help help = new Help();
+    private static List<String> playerName = new ArrayList<>();
+    private static List<String> highscore = new ArrayList<>();
 
     //endregion
 
@@ -44,14 +46,22 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
 
         try {
-            Set<String> highscore = prefs.getStringSet("highscore", null);
-            List<String> list = new ArrayList<>(highscore);
-            recyclerView = findViewById(R.id.recyclerview);
-            Collections.sort(list);
-            System.out.println(highscore);
 
+            playerName.add(prefs.getString("name",""));
+            highscore.add(prefs.getString("highscore",""));
+
+
+
+           // Set<String> highscore = prefs.getStringSet("highscore", null);
+            //List<String> list = new ArrayList<>(highscore);
+            recyclerView = findViewById(R.id.recyclerview);
+            //Collections.sort(list);
+            //System.out.println(highscore);
+
+          Collections.sort(playerName);
+  //          Collections.sort(highscore);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new Adapter(this, list);
+            adapter = new Adapter(this, playerName,highscore);
             recyclerView.setAdapter(adapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
