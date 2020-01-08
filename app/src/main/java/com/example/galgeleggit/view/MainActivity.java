@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //TODO: Lav alt kode om fra dansk til engelsk
 
     //TODO: Måske fjern alt teksten i starten og lav en knap der inflater help??
+
+    //TODO: Lav måske en mulighed for at vælge et navn.
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *
