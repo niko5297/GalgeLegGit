@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.galgeleggit.R;
+import com.example.galgeleggit.model.Help;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
@@ -30,6 +31,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
     Button nytspil, tilbage;
     private MaterialDialog mSimpleDialog;
+    private Help help = new Help();
     ViewGroup container;
     TextView vinder;
     ImageView billede;
@@ -76,19 +78,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         int id = item.getItemId();
         switch (id) {
             case R.id.hjælp:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Hjælp");
-                dialog.setIcon(R.drawable.ic_help_black_24dp);
-                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
-                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
-                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
-                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
-                        "Held og lykke.");
-                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                dialog.show();
+                help.inflateHelp(this);
                 break;
             case R.id.highscore:
                 Intent i = new Intent(this, HighScore.class);

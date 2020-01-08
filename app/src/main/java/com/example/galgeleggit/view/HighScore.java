@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Adapter;
+import com.example.galgeleggit.model.Help;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +32,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
     public static final String prefsFile = "PrefsFile";
     RecyclerView recyclerView;
     private Adapter adapter;
+    private Help help = new Help();
 
     //endregion
 
@@ -76,19 +78,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         int id = item.getItemId();
         switch (id) {
             case R.id.hjælp:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Hjælp");
-                dialog.setIcon(R.drawable.ic_help_black_24dp);
-                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
-                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
-                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
-                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
-                        "Held og lykke.");
-                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                dialog.show();
+                help.inflateHelp(this);
                 break;
             case R.id.highscore:
                 Toast.makeText(this, "Du befinder dig allerede i Highscore", Toast.LENGTH_SHORT).show();

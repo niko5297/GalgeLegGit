@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
+import com.example.galgeleggit.model.Help;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ProgressDialog dialog;
     private int spilType;
     private AsyncTask asyncTask;
+    private Help help = new Help();
     public static boolean erSpilletIGang;
     public static boolean nytSpil;
     public static Galgelogik galgelogik;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
     //TODO: Tilføj pointtavle
+
+    //TODO: Lav alt kode om fra dansk til engelsk
+
+    //TODO: Måske fjern alt teksten i starten og lav en knap der inflater help??
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *
@@ -108,19 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
         switch (id) {
             case R.id.hjælp:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Hjælp");
-                dialog.setIcon(R.drawable.ic_help_black_24dp);
-                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
-                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
-                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
-                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
-                        "Held og lykke.");
-                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                dialog.show();
+                help.inflateHelp(this);
                 break;
             case R.id.highscore:
                 Intent i = new Intent(this, HighScore.class);

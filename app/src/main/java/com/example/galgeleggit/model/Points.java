@@ -11,7 +11,7 @@ public class Points {
     }
 
 
-    public void givPoint() {
+    public int givPoint() {
 
         if (erSidsteKorrekt){
             antalPoints = sidsteAntalPointsGivet * 2;
@@ -22,17 +22,21 @@ public class Points {
         }
         erSidsteKorrekt = true;
 
+        return antalPoints;
+
     }
 
-    public void tagPoint() {
+    public int tagPoint() {
 
-        antalPoints = antalPoints - 5;
+        antalPoints = antalPoints - 2;
 
         if (antalPoints<=0){
             antalPoints = 0;
         }
 
         erSidsteKorrekt = false;
+
+        return antalPoints;
 
     }
 

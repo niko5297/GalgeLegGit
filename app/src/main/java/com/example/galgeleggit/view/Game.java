@@ -1,10 +1,8 @@
 package com.example.galgeleggit.view;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -19,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
+import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Points;
 import com.google.gson.Gson;
 
 import java.util.HashSet;
@@ -35,7 +35,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     ImageView billede;
     Button tjekBogstav, startNytSpil, points;
     private static int antalForkerteGæt = 0;
+    private boolean brugtBogstav;
     private MediaPlayer mediaPlayer;
+    private static Points pointManager = new Points();
+    private Help help = new Help();
     public static Set<String> lokalHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
@@ -61,6 +64,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         visGalge();
         if (galgelogik.erSpilletSlut() || MainActivity.nytSpil) {
+            pointManager.nulstil();
             galgelogik.nulstil();
             antalForkerteGæt = 0;
             billede.setImageDrawable(null);
@@ -132,19 +136,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         int id = item.getItemId();
         switch (id) {
             case R.id.hjælp:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Hjælp");
-                dialog.setIcon(R.drawable.ic_help_black_24dp);
-                dialog.setMessage("Spillet går ud på at du skal gætte det ord som maskinen tænker på. \n" +
-                        "Dette gøres ved at skrive et bogstav. For hvert rigtigt svar vises det bogstav i ordet. " +
-                        "For hvert forkert svar tegnes noget af galgen. Hele galgen vil være tegnet ved 6 forkerte gæt. \n" +
-                        "Det gælder om at gætte hele ordet før galgen er blevet tegnet. \n\n" +
-                        "Held og lykke.");
-                dialog.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-                dialog.show();
+                help.inflateHelp(this);
                 break;
             case R.id.highscore:
                 Intent i = new Intent(this, HighScore.class);
@@ -161,9 +153,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         gemProcess();
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
-            if (galgelogik.erSidsteBogstavKorrekt()) {
+            if (galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
                 mediaPlayer.start();
+                points.setText("Points: " + pointManager.givPoint());
                 skiftetekst.setText("Tillykke!! Du gættede rigigt!");
                 gættedeBogstaver.setText("Dine brugte bogstaver er: " + galgelogik.getBrugteBogstaver());
 
@@ -199,12 +192,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void opdaterGalge() {
-        boolean brugtBogstav = false;
+        brugtBogstav = false;
         if (galgelogik.getBrugteBogstaver().contains(skriveFelt.getText().toString())) {
             brugtBogstav = true;
         }
         galgelogik.gætBogstav(skriveFelt.getText().toString());
         if (!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
+            points.setText("Points: " + pointManager.tagPoint());
             antalForkerteGæt++;
 
             switch (antalForkerteGæt) {
