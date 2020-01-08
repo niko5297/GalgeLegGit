@@ -18,11 +18,12 @@ import com.example.galgeleggit.model.Adapter;
 import com.example.galgeleggit.model.Help;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class HighScore extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class HighScoreActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //region Fields
 
@@ -31,7 +32,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
     private Adapter adapter;
     private Help help = new Help();
     private static List<String> playerName = new ArrayList<>();
-    private static List<String> highscore = new ArrayList<>();
+    private static List<Integer> highscore = new ArrayList<>();
 
     //endregion
 
@@ -48,7 +49,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         try {
 
             playerName.add(prefs.getString("name",""));
-            highscore.add(prefs.getString("highscore",""));
+            highscore.add(prefs.getInt("highscore",0));
 
 
 
@@ -58,8 +59,8 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
             //Collections.sort(list);
             //System.out.println(highscore);
 
-          Collections.sort(playerName);
-  //          Collections.sort(highscore);
+//          Collections.sort(playerName);
+            Arrays.sort(highscore.toArray());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter = new Adapter(this, playerName,highscore);
             recyclerView.setAdapter(adapter);

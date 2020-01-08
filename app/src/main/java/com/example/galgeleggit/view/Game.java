@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.ArraySet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +18,12 @@ import android.widget.TextView;
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Highscore;
 import com.example.galgeleggit.model.Player;
 import com.example.galgeleggit.model.Points;
-import com.google.gson.Gson;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
@@ -40,10 +39,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private boolean usedLetter;
     private MediaPlayer mediaPlayer;
     private Player player = Player.getInstance();
+    private Highscore highscore = Highscore.getInstance();
     public static Points pointManager = new Points();
     private Help help = new Help();
-    public static Set<String> localHighscoreName = new ArraySet<>();
-    public static Set<String> localHighscore = new ArraySet<>();
+    public static List<String> localHighscoreName = new ArrayList<>();
+    public static List<Integer> localHighscore = new ArrayList<>();
     public static final String prefsFile = "PrefsFile";
 
     //endregion
@@ -148,7 +148,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
+                Intent i = new Intent(this, HighScoreActivity.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -179,9 +179,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer.start();
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 localHighscoreName.add((player.getName() + ": "));
-                localHighscore.add(pointManager.getNumberOfPoints()+"");
+                localHighscore.add(pointManager.getNumberOfPoints());
                 editor.putString("name", player.getName() + ": ");
-                editor.putString("highscore", pointManager.getNumberOfPoints()+"");
+                editor.putInt("highscore", pointManager.getNumberOfPoints());
                 editor.apply();
                 /*
                 localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());

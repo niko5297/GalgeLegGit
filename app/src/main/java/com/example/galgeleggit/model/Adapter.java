@@ -19,11 +19,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
      */
 
     private List<String> name;
-    private List<String> highscore;
+    private List<Integer> highscore;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public Adapter(Context context, List<String> name, List<String> highscore) {
+    public Adapter(Context context, List<String> name, List<Integer> highscore) {
         this.mInflater = LayoutInflater.from(context);
         this.name = name;
         this.highscore = highscore;
@@ -42,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         try {
            // if (name.get(position))
             holder.name.setText(name.get(position));
-            holder.highscore.setText(highscore.get(position));
+            holder.highscore.setText(highscore.get(position)+"");
         }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }

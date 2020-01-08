@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -26,7 +25,6 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
 import com.example.galgeleggit.model.Player;
-import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -50,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //TODO: Kommentarer
 
     /**
-     * SPØRG OM DET ER OKAY AT DU LAVER ENDNU EN ARRAYLIST OG SORTERE DEN? I STEDET FOR AT SORTERE TO FORSKELLIGE LISTER
+     * SPØRG OM DET ER OKAY AT DU LAVER ENDNU EN ARRAYLIST OG SORTERE DEN?
+     * I STEDET FOR AT SORTERE TO FORSKELLIGE LISTER
      */
 
     /**
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
+                Intent i = new Intent(this, HighScoreActivity.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //region Spinner
     private void addSpinner() {
-        String[] ordType = {"Almindelige ord", "Hent word fra DR"};
+        String[] ordType = {"Almindelige ord", "Hent ord fra DR"};
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
@@ -189,12 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    return "Hentet word fra DR gennemført";
+                    return "Hentet ord fra DR gennemført";
                 }
 
                 @Override
                 protected void onPostExecute(Object o) {
-                    Toast.makeText(MainActivity.this, "Hentet word fra DR gennemført", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Hentet ord fra DR gennemført", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     asyncTask = null;
                 }
