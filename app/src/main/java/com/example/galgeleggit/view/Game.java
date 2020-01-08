@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Player;
 import com.example.galgeleggit.model.Points;
 import com.google.gson.Gson;
 
@@ -37,6 +38,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private static int antalForkerteGæt = 0;
     private boolean brugtBogstav;
     private MediaPlayer mediaPlayer;
+    private Player player = Player.getInstance();
     public static Points pointManager = new Points();
     private Help help = new Help();
     public static Set<String> lokalHighscore = new HashSet<>();
@@ -174,7 +176,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
-                lokalHighscore.add(pointManager.getAntalPoints()+"");
+                lokalHighscore.add(player.getName() + ": " + pointManager.getAntalPoints());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 editor.putStringSet("highscore", lokalHighscore);
                 editor.apply();

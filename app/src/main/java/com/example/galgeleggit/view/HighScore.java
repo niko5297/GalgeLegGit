@@ -36,8 +36,6 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
 
     //endregion
 
-    //TODO: Lav en ny highscore ranking f.eks. tildeling af points efter hvor mange i træk?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +45,10 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
         setSupportActionBar(mToolbar);
 
         SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
-        Set<String> highscore = prefs.getStringSet("highscore", null);
-        List<String> list = new ArrayList<>(highscore);
 
         try {
+            Set<String> highscore = prefs.getStringSet("highscore", null);
+            List<String> list = new ArrayList<>(highscore);
             recyclerView = findViewById(R.id.recyclerview);
             Collections.sort(list);
             System.out.println(highscore);
@@ -60,6 +58,7 @@ public class HighScore extends AppCompatActivity implements AdapterView.OnItemCl
             recyclerView.setAdapter(adapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
+            System.out.println("WARNING: NO HIGHSCORE FOUND!");
         }
     }
 

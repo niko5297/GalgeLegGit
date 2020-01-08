@@ -10,30 +10,35 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Player;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     //region Fields
 
-    Button start;
-    Button fortsaet;
+    Button start, fortsaet, helpbutton, playername;
     Spinner spinner;
     ProgressDialog dialog;
     private int spilType;
     private AsyncTask asyncTask;
     private Help help = new Help();
+    private String mPlayerName;
+    private Player player = Player.getInstance();
     public static boolean erSpilletIGang;
     public static boolean nytSpil;
     public static Galgelogik galgelogik;
@@ -43,13 +48,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //endregion
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
-    //TODO: Tilføj pointtavle
-
     //TODO: Lav alt kode om fra dansk til engelsk
 
-    //TODO: Måske fjern alt teksten i starten og lav en knap der inflater help??
-
     //TODO: Lav måske en mulighed for at vælge et navn.
+
+    //TODO: Lav popup ved start for at vælge et navn.
 
     //TODO: Overvej hvorvidt der er brug for en controller til f.eks. player, help, point osv osv.
     /**
@@ -67,12 +70,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         start = findViewById(R.id.start);
         fortsaet = findViewById(R.id.fortsaet);
+        playername = findViewById(R.id.playername);
+        helpbutton = findViewById(R.id.help);
+        playername.setOnClickListener(this);
+        helpbutton.setOnClickListener(this);
         fortsaet.setOnClickListener(this);
         start.setOnClickListener(this);
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        if (player.getName()==null) {
+            choosePlayerName();
+        }
         addSpinner();
 
     }
@@ -92,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view == start) {
+            player.setName(mPlayerName);
             erSpilletIGang = true;
             startSpilleType(spilType);
             nytSpil = true;
@@ -103,6 +114,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, Game.class);
             startActivity(i);
         }
+
+        if (view == helpbutton){
+            help.inflateHelp(this);
+        }
+
+        if (view == playername){
+            choosePlayerName();
+        }
+
+
     }
 
     @Override
@@ -205,6 +226,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             galgelogik = drGalgeLogik;
         }
+
+    }
+
+    /**
+     * https://stackoverflow.com/questions/10903754/input-text-dialog-android
+     */
+
+    private void choosePlayerName(){
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Vælg dit spiller navn");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Vælg navn", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPlayerName = input.getText().toString();
+            }
+        });
+        builder.show();
+
+
+
 
     }
 
