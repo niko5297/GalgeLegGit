@@ -11,8 +11,8 @@
         android:roundIcon="@drawable/ic_iconfinder_039_024_gallows_deceased_halloween_death_3792083"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.TaberAktivitet"></activity>
-        <activity android:name=".view.VinderAktivitet" />
+        <activity android:name=".view.LoserActivity"></activity>
+        <activity android:name=".view.WinnerActivity" />
         <activity android:name=".view.HighScore" />
         <activity android:name=".view.Game" />
         <activity android:name=".view.MainActivity" >

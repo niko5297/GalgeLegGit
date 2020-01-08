@@ -47,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //endregion
     //TODO: Tilføj fortsæt spil til Shared preferences, så man stadig kan fortsætte sit spil, selvom man har lukket appen
 
-    //TODO: Lav alt kode om fra dansk til engelsk
-
     //TODO: Overvej hvorvidt der er brug for en controller til f.eks. player, help, point osv osv.
 
     //TODO: Kommentarer
+
+    //FIXME: Sørg for man ikke kan benytte ,.:- osv. (specialtegn)
     /**
      * SE HER: https://stackoverflow.com/questions/7145606/how-android-sharedpreferences-save-store-object
      *
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view == start) {
-            player.setName(mPlayerName);
             isGameRunning = true;
             startGameType(gameType);
             newGame = true;
@@ -240,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(player.getName());
         builder.setView(input);
 
         // Set up the buttons
@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mPlayerName = input.getText().toString();
+                player.setName(mPlayerName);
             }
         });
         builder.show();

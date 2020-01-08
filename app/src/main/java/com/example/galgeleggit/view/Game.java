@@ -34,14 +34,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     TextView word, guessedLetters, switchText;
     EditText typeField;
     ImageView hangmanImage;
-    Button tjekBogstav, startNytSpil, points;
-    private static int antalForkerteGæt = 0;
-    private boolean brugtBogstav;
+    Button checkLetter, newGameButton, points;
+    private static int numberOfWrongGuesses = 0;
+    private boolean usedLetter;
     private MediaPlayer mediaPlayer;
     private Player player = Player.getInstance();
     public static Points pointManager = new Points();
     private Help help = new Help();
-    public static Set<String> lokalHighscore = new HashSet<>();
+    public static Set<String> localHighscore = new HashSet<>();
     public static final String prefsFile = "PrefsFile";
 
     //endregion
@@ -53,26 +53,26 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_game);
         galgelogik = MainActivity.galgelogik;
 
-        tjekBogstav = findViewById(R.id.tjekBogstav);
+        checkLetter = findViewById(R.id.checkLetter);
         word = findViewById(R.id.word);
         guessedLetters = findViewById(R.id.guessedLetters);
         switchText = findViewById(R.id.switchText);
         typeField = findViewById(R.id.typeField);
         hangmanImage = findViewById(R.id.hangmanImage);
-        startNytSpil = findViewById(R.id.nytSpil);
+        newGameButton = findViewById(R.id.newGame);
         points = findViewById(R.id.points);
-        startNytSpil.setOnClickListener(this);
-        tjekBogstav.setOnClickListener(this);
+        newGameButton.setOnClickListener(this);
+        checkLetter.setOnClickListener(this);
 
-        visGalge();
+        showHangman();
         if (galgelogik.erSpilletSlut() || MainActivity.newGame) {
             pointManager.nulstil();
             galgelogik.nulstil();
-            antalForkerteGæt = 0;
-            points.setText("Points: " + pointManager.getAntalPoints());
+            numberOfWrongGuesses = 0;
+            points.setText("Points: " + pointManager.getNumberOfPoints());
             hangmanImage.setImageDrawable(null);
-            opdaterOrdOgGættedeBogstaver();
-            visGalge();
+            updateWordAndGuessedLetters();
+            showHangman();
         }
 
 
@@ -80,7 +80,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         guessedLetters.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
-        points.setText("Points :" + pointManager.getAntalPoints());
+        points.setText("Points :" + pointManager.getNumberOfPoints());
 
 
         System.out.println(galgelogik.getOrdet());
@@ -101,29 +101,29 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == tjekBogstav && typeField.getText().toString().length() < 1) {
+        if (view == checkLetter && typeField.getText().toString().length() < 1) {
             typeField.setError("Du har skrevet for få bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && typeField.getText().toString().length() > 1) {
+        if (view == checkLetter && typeField.getText().toString().length() > 1) {
             typeField.setError("Du har skrevet for mange bogstaver. Skriv et bogstav for at gætte");
         }
 
-        if (view == tjekBogstav && typeField.getText().toString().length() == 1) {
-            opdaterGalge();
-            opdaterOrdOgGættedeBogstaver();
+        if (view == checkLetter && typeField.getText().toString().length() == 1) {
+            updateHangman();
+            updateWordAndGuessedLetters();
 
 
         }
 
-        if (view == startNytSpil) {
+        if (view == newGameButton) {
             switchText.setText("");
             galgelogik.nulstil();
             pointManager.nulstil();
-            antalForkerteGæt = 0;
-            points.setText("Points: " + pointManager.getAntalPoints());
+            numberOfWrongGuesses = 0;
+            points.setText("Points: " + pointManager.getNumberOfPoints());
             hangmanImage.setImageDrawable(null);
-            opdaterOrdOgGættedeBogstaver();
+            updateWordAndGuessedLetters();
         }
         typeField.getText().clear();
 
@@ -156,11 +156,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Support Methods
 
-    private void opdaterOrdOgGættedeBogstaver() {
-        gemProcess();
+    private void updateWordAndGuessedLetters() {
+        saveProcess();
         word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
-            if (galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
+            if (galgelogik.erSidsteBogstavKorrekt() && !usedLetter) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
                 mediaPlayer.start();
                 points.setText("Points: " + pointManager.givPoint());
@@ -176,11 +176,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
-                lokalHighscore.add(player.getName() + ": " + pointManager.getAntalPoints());
+                localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
-                editor.putStringSet("highscore", lokalHighscore);
+                editor.putStringSet("highscore", localHighscore);
                 editor.apply();
-                Intent i = new Intent(this, VinderAktivitet.class);
+                Intent i = new Intent(this, WinnerActivity.class);
                 startActivity(i);
                 finish();
 
@@ -188,7 +188,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (galgelogik.erSpilletTabt()) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.lost);
                 mediaPlayer.start();
-                Intent i = new Intent(this, TaberAktivitet.class);
+                Intent i = new Intent(this, LoserActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -198,17 +198,17 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    private void opdaterGalge() {
-        brugtBogstav = false;
+    private void updateHangman() {
+        usedLetter = false;
         if (galgelogik.getBrugteBogstaver().contains(typeField.getText().toString())) {
-            brugtBogstav = true;
+            usedLetter = true;
         }
         galgelogik.gætBogstav(typeField.getText().toString());
-        if (!galgelogik.erSidsteBogstavKorrekt() && !brugtBogstav) {
+        if (!galgelogik.erSidsteBogstavKorrekt() && !usedLetter) {
             points.setText("Points: " + pointManager.tagPoint());
-            antalForkerteGæt++;
+            numberOfWrongGuesses++;
 
-            switch (antalForkerteGæt) {
+            switch (numberOfWrongGuesses) {
                 case 1:
                     hangmanImage.setImageResource(R.drawable.galge);
                     break;
@@ -235,8 +235,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void visGalge() {
-        switch (antalForkerteGæt) {
+    private void showHangman() {
+        switch (numberOfWrongGuesses) {
             case 1:
                 hangmanImage.setImageResource(R.drawable.galge);
                 break;
@@ -262,7 +262,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void gemProcess() {
+    private void saveProcess() {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
         Gson gson = new Gson();
         String json = gson.toJson(galgelogik);
@@ -274,8 +274,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Public methods
 
-    public static void setAntalForkerteGæt(int antalForkerteGæt) {
-        Game.antalForkerteGæt = antalForkerteGæt;
+    public static void setNumberOfWrongGuesses(int numberOfWrongGuesses) {
+        Game.numberOfWrongGuesses = numberOfWrongGuesses;
     }
 
     //endregion

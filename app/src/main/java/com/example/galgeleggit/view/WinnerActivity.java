@@ -23,38 +23,38 @@ import com.example.galgeleggit.model.Help;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
-public class VinderAktivitet extends AppCompatActivity implements View.OnClickListener {
+public class WinnerActivity extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
 
-    Button nytspil, tilbage;
+    Button newGameButton, backButton;
     private MaterialDialog mSimpleDialog;
     private Help help = new Help();
     ViewGroup container;
-    TextView vinder;
-    ImageView billede;
+    TextView winner;
+    ImageView trophyImage;
 
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vinder_aktivitet);
+        setContentView(R.layout.activity_winner);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        nytspil = findViewById(R.id.nytspil2);
-        tilbage = findViewById(R.id.tilStart);
-        vinder = findViewById(R.id.vinder);
-        billede = findViewById(R.id.trophy);
+        newGameButton = findViewById(R.id.newGameWinner);
+        backButton = findViewById(R.id.backWinner);
+        winner = findViewById(R.id.winner);
+        trophyImage = findViewById(R.id.trophy);
         container = findViewById(R.id.container);
 
-        vinder.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
+        winner.setText("DU VANDT SPILLET!! \n\nStort tillykke med sejren.\nDin score er nu lokalt gemt i Highscore!\n\n" +
                 "Ordet du har gættet er: " + MainActivity.galgelogik.getOrdet() +
                 "\nog du fik kun " + MainActivity.galgelogik.getAntalForkerteBogstaver() + " forkerte bogstaver");
 
-        nytspil.setOnClickListener(this);
-        tilbage.setOnClickListener(this);
+        newGameButton.setOnClickListener(this);
+        backButton.setOnClickListener(this);
 
         MainActivity.isGameRunning = false;
 
@@ -90,12 +90,12 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
 
-        if (view == nytspil) {
+        if (view == newGameButton) {
             buildDialog();
             mSimpleDialog.show();
         }
 
-        if (view == tilbage) {
+        if (view == backButton) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
@@ -107,7 +107,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
 
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_image);
-        billede.startAnimation(rotate);
+        trophyImage.startAnimation(rotate);
     }
 
     private void runConfetti() {
@@ -124,7 +124,7 @@ public class VinderAktivitet extends AppCompatActivity implements View.OnClickLi
         MainActivity.newGame = false;
         MainActivity.galgelogik.nulstil();
         Game.pointManager.nulstil();
-        Game.setAntalForkerteGæt(0);
+        Game.setNumberOfWrongGuesses(0);
         Intent i = new Intent(this, Game.class);
         startActivity(i);
         finish();

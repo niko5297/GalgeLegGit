@@ -1,14 +1,10 @@
 package com.example.galgeleggit.model;
 
-import android.widget.Button;
-
-import com.example.galgeleggit.R;
-
 public class Points {
 
-    private boolean erSidsteKorrekt;
-    private int antalPoints;
-    private int sidsteAntalPointsGivet;
+    private boolean lastCorrect;
+    private int numberOfPoints;
+    private int lastPointsGiven;
 
     public Points() {
     }
@@ -16,64 +12,64 @@ public class Points {
 
     public int givPoint() {
 
-        if (erSidsteKorrekt){
-            antalPoints += sidsteAntalPointsGivet * 2;
-            sidsteAntalPointsGivet = sidsteAntalPointsGivet * 2;
+        if (lastCorrect){
+            numberOfPoints += lastPointsGiven * 2;
+            lastPointsGiven = lastPointsGiven * 2;
         } else {
-            antalPoints++;
-            sidsteAntalPointsGivet = 1;
+            numberOfPoints++;
+            lastPointsGiven = 1;
         }
-        erSidsteKorrekt = true;
+        lastCorrect = true;
 
-        return antalPoints;
+        return numberOfPoints;
 
     }
 
     public int tagPoint() {
 
-        antalPoints = antalPoints - 2;
+        numberOfPoints = numberOfPoints - 2;
 
-        if (antalPoints<=0){
-            antalPoints = 0;
+        if (numberOfPoints <=0){
+            numberOfPoints = 0;
         }
 
-        erSidsteKorrekt = false;
+        lastCorrect = false;
 
-        return antalPoints;
+        return numberOfPoints;
 
     }
 
     public void nulstil() {
-        sidsteAntalPointsGivet = 0;
-        erSidsteKorrekt = false;
-        antalPoints = 0;
+        lastPointsGiven = 0;
+        lastCorrect = false;
+        numberOfPoints = 0;
     }
 
     //region getters/setters
 
 
-    public boolean isErSidsteKorrekt() {
-        return erSidsteKorrekt;
+    public boolean isLastCorrect() {
+        return lastCorrect;
     }
 
-    public void setErSidsteKorrekt(boolean erSidsteKorrekt) {
-        this.erSidsteKorrekt = erSidsteKorrekt;
+    public void setLastCorrect(boolean lastCorrect) {
+        this.lastCorrect = lastCorrect;
     }
 
-    public int getAntalPoints() {
-        return antalPoints;
+    public int getNumberOfPoints() {
+        return numberOfPoints;
     }
 
-    public void setAntalPoints(int antalPoints) {
-        this.antalPoints = antalPoints;
+    public void setNumberOfPoints(int numberOfPoints) {
+        this.numberOfPoints = numberOfPoints;
     }
 
-    public int getSidsteAntalPointsGivet() {
-        return sidsteAntalPointsGivet;
+    public int getLastPointsGiven() {
+        return lastPointsGiven;
     }
 
-    public void setSidsteAntalPointsGivet(int sidsteAntalPointsGivet) {
-        this.sidsteAntalPointsGivet = sidsteAntalPointsGivet;
+    public void setLastPointsGiven(int lastPointsGiven) {
+        this.lastPointsGiven = lastPointsGiven;
     }
 
     //endregion

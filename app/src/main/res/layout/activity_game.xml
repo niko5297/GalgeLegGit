@@ -16,7 +16,7 @@
         android:ems="10"
         android:hint="Skriv bogstav"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@id/tjekBogstav"
+        app:layout_constraintEnd_toStartOf="@id/checkLetter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,7 +33,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-    android:id="@+id/tjekBogstav"
+    android:id="@+id/checkLetter"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="88dp"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/switchText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tjekBogstav"
+        app:layout_constraintBottom_toTopOf="@id/checkLetter"
         />
     
     <androidx.appcompat.widget.Toolbar
@@ -101,7 +101,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/nytSpil"
+        android:id="@+id/newGame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

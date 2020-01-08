@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/beskrivelse"
+        android:id="@+id/textViewHighscore"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

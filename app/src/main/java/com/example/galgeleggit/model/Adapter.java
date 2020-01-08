@@ -14,6 +14,10 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    /**
+     * Kilde:
+     */
+
     private List<String> mData;
     private LayoutInflater mInflater;
 
@@ -50,7 +54,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.beskrivelse);
+            textView = itemView.findViewById(R.id.textViewHighscore);
         }
 
     }

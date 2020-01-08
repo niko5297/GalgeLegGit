@@ -20,13 +20,13 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Help;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
-public class TaberAktivitet extends AppCompatActivity implements View.OnClickListener {
+public class LoserActivity extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
 
-    Button nytspil, tilbage;
-    TextView taber;
-    ImageView billede;
+    Button newGameButton, backButton;
+    TextView loser;
+    ImageView thumbsImage;
     private MaterialDialog mSimpleDialog;
     private Help help = new Help();
 
@@ -35,20 +35,20 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_taber_aktivitet);
+        setContentView(R.layout.activity_loser);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        nytspil = findViewById(R.id.nytspil3);
-        tilbage = findViewById(R.id.tilStart2);
-        taber = findViewById(R.id.taber);
-        billede = findViewById(R.id.thumbs);
+        newGameButton = findViewById(R.id.newGameLoser);
+        backButton = findViewById(R.id.backLoser);
+        loser = findViewById(R.id.loser);
+        thumbsImage = findViewById(R.id.thumbs);
 
-        taber.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
+        loser.setText("Du tabte desværre.\n\nBedre held næste gang.\nDu kan altid starte et nyt spil ved at klikke nedenfor\n\n" +
                 "Ordet du skulle have gættet var: " + MainActivity.galgelogik.getOrdet() + "\nDin score er derfor ikke blevet gemt i Highscore");
 
-        nytspil.setOnClickListener(this);
-        tilbage.setOnClickListener(this);
+        newGameButton.setOnClickListener(this);
+        backButton.setOnClickListener(this);
 
         MainActivity.isGameRunning = false;
 
@@ -79,12 +79,12 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
     @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View view) {
-        if (view == nytspil) {
+        if (view == newGameButton) {
             buildDialog();
             mSimpleDialog.show();
         }
 
-        if (view == tilbage) {
+        if (view == backButton) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
@@ -95,7 +95,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
 
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
-        billede.startAnimation(rotate);
+        thumbsImage.startAnimation(rotate);
     }
 
     private void setNytspil() {
@@ -103,7 +103,7 @@ public class TaberAktivitet extends AppCompatActivity implements View.OnClickLis
         MainActivity.newGame = false;
         MainActivity.galgelogik.nulstil();
         Game.pointManager.nulstil();
-        Game.setAntalForkerteGæt(0);
+        Game.setNumberOfWrongGuesses(0);
         Intent i = new Intent(this, Game.class);
         startActivity(i);
         finish();
