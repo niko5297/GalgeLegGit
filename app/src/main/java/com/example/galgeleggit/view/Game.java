@@ -67,6 +67,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             pointManager.nulstil();
             galgelogik.nulstil();
             antalForkerteGæt = 0;
+            points.setText("Points: " + pointManager.getAntalPoints());
             billede.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
             visGalge();
@@ -76,6 +77,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         ord.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
 
         gættedeBogstaver.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
+
+        points.setText("Points :" + pointManager.getAntalPoints());
 
 
         System.out.println(galgelogik.getOrdet());
@@ -114,7 +117,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (view == startNytSpil) {
             skiftetekst.setText("");
             galgelogik.nulstil();
+            pointManager.nulstil();
             antalForkerteGæt = 0;
+            points.setText("Points: " + pointManager.getAntalPoints());
             billede.setImageDrawable(null);
             opdaterOrdOgGættedeBogstaver();
         }

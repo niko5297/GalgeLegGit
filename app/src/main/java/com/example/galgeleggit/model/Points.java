@@ -1,11 +1,14 @@
 package com.example.galgeleggit.model;
 
+import android.widget.Button;
+
+import com.example.galgeleggit.R;
+
 public class Points {
 
     private boolean erSidsteKorrekt;
     private int antalPoints;
     private int sidsteAntalPointsGivet;
-
 
     public Points() {
     }
@@ -14,7 +17,7 @@ public class Points {
     public int givPoint() {
 
         if (erSidsteKorrekt){
-            antalPoints = sidsteAntalPointsGivet * 2;
+            antalPoints += sidsteAntalPointsGivet * 2;
             sidsteAntalPointsGivet = sidsteAntalPointsGivet * 2;
         } else {
             antalPoints++;
@@ -45,4 +48,33 @@ public class Points {
         erSidsteKorrekt = false;
         antalPoints = 0;
     }
+
+    //region getters/setters
+
+
+    public boolean isErSidsteKorrekt() {
+        return erSidsteKorrekt;
+    }
+
+    public void setErSidsteKorrekt(boolean erSidsteKorrekt) {
+        this.erSidsteKorrekt = erSidsteKorrekt;
+    }
+
+    public int getAntalPoints() {
+        return antalPoints;
+    }
+
+    public void setAntalPoints(int antalPoints) {
+        this.antalPoints = antalPoints;
+    }
+
+    public int getSidsteAntalPointsGivet() {
+        return sidsteAntalPointsGivet;
+    }
+
+    public void setSidsteAntalPointsGivet(int sidsteAntalPointsGivet) {
+        this.sidsteAntalPointsGivet = sidsteAntalPointsGivet;
+    }
+
+    //endregion
 }
