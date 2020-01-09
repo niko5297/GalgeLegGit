@@ -85,8 +85,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         points.setText("Points :" + pointManager.getNumberOfPoints());
 
-
-        System.out.println(galgelogik.getOrdet());
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
