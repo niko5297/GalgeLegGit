@@ -5,62 +5,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Game">
+    tools:context=".view.Game">
 
     <EditText
-        android:id="@+id/skriveFelt"
-        android:layout_width="270dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="7dp"
+        android:id="@+id/typeField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="88dp"
         android:ems="10"
         android:hint="Skriv bogstav"
         android:inputType="textPersonName"
+        android:digits="qwertyuiopåøælkjhgfdsazxcvbnm"
+        app:layout_constraintEnd_toStartOf="@id/checkLetter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/galge"
+        android:id="@+id/hangmanImage"
         android:layout_width="536dp"
         android:layout_height="0dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="190dp"
-        app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
+        app:layout_constraintBottom_toTopOf="@+id/typeField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/tjekBogstav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="88dp"
-        android:text="Tjek Bogstav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    android:id="@+id/checkLetter"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="88dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:text="Tjek Bogstav"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/typeField" />
+
 
     <TextView
-        android:id="@+id/ord"
+        android:id="@+id/word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galge" />
+        app:layout_constraintTop_toBottomOf="@+id/hangmanImage" />
 
     <TextView
-        android:id="@+id/gættedeBogstaver"
+        android:id="@+id/guessedLetters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
         android:text="@string/gættedeBogstaverStart"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/skriveFelt"
+        app:layout_constraintBottom_toTopOf="@+id/switchText"
+        app:layout_constraintTop_toBottomOf="@id/word"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/switchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/points"
+        app:layout_constraintTop_toBottomOf="@id/guessedLetters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Points: 0"
+        android:textAllCaps="false"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/switchText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/checkLetter"
+        />
     
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -73,10 +102,11 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/nytSpil"
+        android:id="@+id/newGame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
         android:text="Start nyt spil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -11,11 +11,11 @@
         android:roundIcon="@drawable/ic_iconfinder_039_024_gallows_deceased_halloween_death_3792083"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TaberAktivitet"></activity>
-        <activity android:name=".VinderAktivitet" />
-        <activity android:name=".HighScore" />
-        <activity android:name=".Game" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.LoserActivity"></activity>
+        <activity android:name=".view.WinnerActivity" />
+        <activity android:name=".view.HighScoreActivity" />
+        <activity android:name=".view.Game" />
+        <activity android:name=".view.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

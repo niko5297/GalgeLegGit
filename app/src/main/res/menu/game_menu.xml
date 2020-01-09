@@ -8,7 +8,7 @@
         app:showAsAction="always">
     <menu>
         <item
-        android:id="@+id/hjælp"
+        android:id="@+id/helpMenu"
         android:icon="@drawable/ic_help_black_24dp"
         android:title="Hjælp"
         app:showAsAction="ifRoom" />

@@ -1,4 +1,4 @@
-package com.example.galgeleggit;
+package com.example.galgeleggit.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;

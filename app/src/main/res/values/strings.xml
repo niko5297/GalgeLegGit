@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">s185082 - Nikolajs Galgeleg</string>
     <string name="gættedeBogstaverStart">Du har gættet på følgende bogstaver:</string>
+    <string name="chooseName">Du har ikke valgt noget spille navn! Vælg et</string>
 </resources>
