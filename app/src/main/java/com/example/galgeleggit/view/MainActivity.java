@@ -95,13 +95,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view == start && player.getName()!=null) {
-            isGameRunning = true;
-            startGameType(gameType);
-            newGame = true;
-            Intent i = new Intent(this, Game.class);
-            startActivity(i);
-
+        if (view == start ) {
+            if (player.getName()==null){
+                Toast.makeText(this, R.string.chooseName, Toast.LENGTH_SHORT).show();
+                choosePlayerName();
+            }
+            else {
+                isGameRunning = true;
+                startGameType(gameType);
+                newGame = true;
+                Intent i = new Intent(this, Game.class);
+                startActivity(i);
+            }
         }
 
         if (view == continueButton) {
@@ -114,11 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (view == playername){
-            choosePlayerName();
-        }
-
-        else {
-            Toast.makeText(this, R.string.chooseName, Toast.LENGTH_SHORT).show();
             choosePlayerName();
         }
 
