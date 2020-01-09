@@ -10,7 +10,7 @@ import com.example.galgeleggit.R;
 /**
  * @date 08/01/2020
  *
- * @description
+ * @description This class handles help dialog
  *
  */
 

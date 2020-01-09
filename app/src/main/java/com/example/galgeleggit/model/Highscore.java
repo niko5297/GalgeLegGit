@@ -6,9 +6,8 @@ import java.util.List;
 /**
  * @date 08/01/2020
  *
- * @description
- *
- * @source https://www.baeldung.com/java-singleton
+ * @description This class defines a highscore object. Comparable have been implemented
+ * to allow Collection.sort to be used to sort the highscore list.
  *
  */
 

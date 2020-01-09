@@ -24,26 +24,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @date 11/11/2019
- *
- * @description
- *
  * @source https://developer.android.com/guide/topics/ui/layout/recyclerview
- *
  */
+
 public class HighScoreActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //region Fields
 
-    public static final String prefsFile = "PrefsFile";
     RecyclerView recyclerView;
+
+    public static final String prefsFile = "PrefsFile";
+
     private Adapter adapter;
     private Help help = new Help();
     private int counter;
     private Highscore highscore;
     private List<Highscore> highscoreList = new ArrayList<>();
-    private static List<String> playerName = new ArrayList<>();
-    private static List<Integer> highscorelistikkebrug = new ArrayList<>();
 
     //endregion
 
@@ -61,38 +57,15 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
 
             counter = prefs.getInt("counter",0);
 
-            System.out.println(counter);
-
-            //highscore = new Highscore(prefs.getString("name",""), prefs.getInt("highscore",0));
-
-//            System.out.println(highscore.getName() + highscore.getScore());
-
-
-
-
-
             for (int i = 1; i<=counter; i++){
                 highscore = new Highscore(prefs.getString("name_"+i,""), prefs.getInt("highscore_"+i,0));
                 System.out.println(highscore.getName() + highscore.getScore());
                 highscoreList.add(highscore);
             }
 
-
-
-
-
             Collections.sort(highscoreList);
 
-
-
-           // Set<String> highscore = prefs.getStringSet("highscore", null);
-            //List<String> list = new ArrayList<>(highscore);
             recyclerView = findViewById(R.id.recyclerview);
-            //Collections.sort(list);
-            //System.out.println(highscore);
-
-//          Collections.sort(playerName);
-          //  Arrays.sort(highscorelistikkebrug.toArray());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter = new Adapter(this, highscoreList);
             recyclerView.setAdapter(adapter);
@@ -102,6 +75,11 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
         }
     }
 
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -109,6 +87,11 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

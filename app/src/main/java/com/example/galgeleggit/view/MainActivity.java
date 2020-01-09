@@ -26,12 +26,6 @@ import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
 import com.example.galgeleggit.model.Player;
 
-/**
- * @date 18/10/2019
- *
- * @description
- *
- */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     //region Fields
@@ -39,11 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button start, continueButton, helpbutton, playername;
     Spinner spinner;
     ProgressDialog dialog;
+
     private int gameType;
     private AsyncTask asyncTask;
     private Help help = new Help();
     private String mPlayerName;
     private Player player = Player.getInstance();
+
     public static boolean isGameRunning;
     public static boolean newGame;
     public static Galgelogik galgelogik;
@@ -51,22 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
     //endregion
-    //TODO: Kommentarer
-
-    //FIXME: Har lavet MainActivity kommentarer
-
-    /**
-     * LAV EN INT DER TÆLLER HVOR MANGE HIGHSCORE DER ER LAVET
-     */
-
-
-    /**
-     * Der skal være en liste (f.eks. et RecyclerView der viser en highscoreliste).
-     * Listens elementer har flere varierende views (f.eks. scoren, ordet og tidspunktet
-     * det gælder ikke at formattere det hele i én enkelt streng og bare vise én streng per listeelement)
-     * @param savedInstanceState
-     */
-
 
     //region onCreate / onResume
     @Override

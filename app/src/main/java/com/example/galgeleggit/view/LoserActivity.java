@@ -21,12 +21,8 @@ import com.example.galgeleggit.model.Help;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 /**
- * @date 7/11/2019
  *
- * @description
- *
- * @source https://android-arsenal.com/details/1/7959
- *
+ * @source https://android-arsenal.com/details/1/7959*
  */
 public class LoserActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +31,7 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
     Button newGameButton, backButton;
     TextView loser;
     ImageView thumbsImage;
+
     private MaterialDialog mSimpleDialog;
     private Help help = new Help();
 
@@ -63,6 +60,11 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         runAnimation();
     }
 
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -70,6 +72,11 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -100,12 +107,18 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
 
     //region Support methods
 
+    /**
+     * This method runs the losing animation
+     */
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.scale_image);
         thumbsImage.startAnimation(rotate);
     }
 
-    private void setNytspil() {
+    /**
+     * This method sets the new game if you decide to run a new game from LoserActivity
+     */
+    private void setNewGame() {
         MainActivity.isGameRunning = true;
         MainActivity.newGame = false;
         MainActivity.galgelogik.nulstil();
@@ -116,6 +129,11 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
+    /**
+     * This method builds the material components dialog with animation
+     *
+     * @source https://android-arsenal.com/details/1/7959*
+     */
     private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)
@@ -127,7 +145,7 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
                         Toast.makeText(getApplicationContext(), "Nyt spil!", Toast.LENGTH_SHORT).show();
-                        setNytspil();
+                        setNewGame();
                         dialogInterface.dismiss();
                     }
                 })

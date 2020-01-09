@@ -3,7 +3,7 @@ package com.example.galgeleggit.model;
 /**
  * @date 08/01/2020
  *
- * @description
+ * @description This class defines the singleton Player object.
  *
  * @source https://www.baeldung.com/java-singleton
  *

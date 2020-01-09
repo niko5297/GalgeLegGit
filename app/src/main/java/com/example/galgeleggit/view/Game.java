@@ -25,30 +25,24 @@ import com.example.galgeleggit.model.Points;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @date 18/10/2019
- *
- * @description
- *
- */
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
 
-    public static Galgelogik galgelogik;
     TextView word, guessedLetters, switchText;
     EditText typeField;
     ImageView hangmanImage;
     Button checkLetter, newGameButton, points;
+
     private static int numberOfWrongGuesses = 0;
     private boolean usedLetter;
     private MediaPlayer mediaPlayer;
     private Player player = Player.getInstance();
     private int highscoreCounter;
-    public static Points pointManager = new Points();
     private Help help = new Help();
-    public static List<String> localHighscoreName = new ArrayList<>();
-    public static List<Integer> localHighscore = new ArrayList<>();
+
+    public static Points pointManager = new Points();
+    public static Galgelogik galgelogik;
     public static final String prefsFile = "PrefsFile";
 
     //endregion
@@ -137,6 +131,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -144,6 +143,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -163,6 +167,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Support Methods
 
+    /**
+     * This method updates the remaining word and the guessed letters.
+     * This method also checks if you won or lost the game.
+     */
     private void updateWordAndGuessedLetters() {
         word.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
@@ -186,18 +194,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 highscoreCounter = prefs.getInt("counter",0);
                 highscoreCounter++;
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
-                localHighscoreName.add((player.getName() + ": "));
-                localHighscore.add(pointManager.getNumberOfPoints());
                 editor.putInt("counter", highscoreCounter);
                 editor.putString("name_"+highscoreCounter, player.getName());
                 editor.putInt("highscore_"+highscoreCounter, pointManager.getNumberOfPoints());
                 editor.apply();
-                /*
-                localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());
-                SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
-                editor.putStringSet("highscore", localHighscore);
-                editor.apply();
-                 */
                 Intent i = new Intent(this, WinnerActivity.class);
                 startActivity(i);
                 finish();
@@ -216,6 +216,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * This method updates the hangman imageview if you have guessed wrong
+     */
     private void updateHangman() {
         usedLetter = false;
         if (galgelogik.getBrugteBogstaver().contains(typeField.getText().toString())) {
@@ -253,6 +256,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * This method shows the hangman, if the game have been paused.
+     */
     private void showHangman() {
         switch (numberOfWrongGuesses) {
             case 1:
@@ -283,6 +289,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Public methods
 
+    /**
+     * This method is used to reset the Game, if you launch a new game from WinnerActivity or LoserActivity
+     * @param numberOfWrongGuesses
+     */
     public static void setNumberOfWrongGuesses(int numberOfWrongGuesses) {
         Game.numberOfWrongGuesses = numberOfWrongGuesses;
     }

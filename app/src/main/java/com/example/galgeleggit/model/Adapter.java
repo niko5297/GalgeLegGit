@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @date 11/11/2019
  *
- * @description
+ * @description This class is the custom written adapter, which defines the layout of RecyclerView
  *
  * @source https://developer.android.com/guide/topics/ui/layout/recyclerview
  *
