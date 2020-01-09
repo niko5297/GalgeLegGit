@@ -23,15 +23,22 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    //region Fields
 
     private List<Highscore> highscoreList;
     private LayoutInflater mInflater;
+
+    //endregion
+
+    //region Constructor
 
     // data is passed into the constructor
     public Adapter(Context context, List<Highscore> highscoreList) {
         this.mInflater = LayoutInflater.from(context);
         this.highscoreList = highscoreList;
     }
+
+    //endregion
 
     // inflates the row layout from xml when needed
     @Override
@@ -58,6 +65,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return highscoreList.size();
     }
 
+    //region ViewHolder
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,4 +79,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
 
     }
+
+    //endregion
 }

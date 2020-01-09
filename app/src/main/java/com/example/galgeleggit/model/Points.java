@@ -9,12 +9,20 @@ package com.example.galgeleggit.model;
 
 public class Points {
 
+    //region Fields
+
     private boolean lastCorrect;
     private int numberOfPoints;
     private int lastPointsGiven;
 
+    //endregion
+
+    //region Constructor
+
     public Points() {
     }
+
+    //endregion
 
     //region public methods
 

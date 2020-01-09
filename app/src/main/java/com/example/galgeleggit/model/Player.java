@@ -11,11 +11,21 @@ package com.example.galgeleggit.model;
 
 public final class Player {
 
+    //region Fields
+
     private String name;
     private static Player instance;
 
+    //endregion
+
+    //region Constructor
+
     private Player (){
     }
+
+    //endregion
+
+    //region Singleton Instance
 
     public static Player getInstance(){
         if (instance==null){
@@ -24,6 +34,10 @@ public final class Player {
         return instance;
     }
 
+    //endregion
+
+    //region getters/setters
+
     public String getName() {
         return name;
     }
@@ -31,5 +45,7 @@ public final class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+    //endregion
 
 }

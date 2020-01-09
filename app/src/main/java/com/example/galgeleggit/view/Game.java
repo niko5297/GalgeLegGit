@@ -40,6 +40,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private Player player = Player.getInstance();
     private int highscoreCounter;
     private Help help = new Help();
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     public static Points pointManager = new Points();
     public static Galgelogik galgelogik;
@@ -190,10 +192,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
-                SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
+                prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
                 highscoreCounter = prefs.getInt("counter",0);
                 highscoreCounter++;
-                SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
+                editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 editor.putInt("counter", highscoreCounter);
                 editor.putString("name_"+highscoreCounter, player.getName());
                 editor.putInt("highscore_"+highscoreCounter, pointManager.getNumberOfPoints());

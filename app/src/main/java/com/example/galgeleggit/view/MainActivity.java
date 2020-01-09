@@ -95,12 +95,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view == start) {
+        if (view == start && player.getName()!=null) {
             isGameRunning = true;
             startGameType(gameType);
             newGame = true;
             Intent i = new Intent(this, Game.class);
             startActivity(i);
+
         }
 
         if (view == continueButton) {
@@ -113,6 +114,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (view == playername){
+            choosePlayerName();
+        }
+
+        else {
+            Toast.makeText(this, R.string.chooseName, Toast.LENGTH_SHORT).show();
             choosePlayerName();
         }
 
@@ -274,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 player.setName(mPlayerName);
 
                 if (player.getName().equals("")){
-                    Toast.makeText(MainActivity.this, "Du har ikke valgt noget spille navn! Vælg et", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.chooseName, Toast.LENGTH_SHORT).show();
                     choosePlayerName();
                 }
             }

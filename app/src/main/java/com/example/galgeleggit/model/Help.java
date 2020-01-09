@@ -16,10 +16,15 @@ import com.example.galgeleggit.R;
 
 public class Help {
 
+    //region Constructor
+
     public Help () {
 
     }
 
+    //endregion
+
+    //region Public methods
 
     public void inflateHelp(Context context) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -39,4 +44,6 @@ public class Help {
         });
         dialog.show();
     }
+
+    //endregion
 }

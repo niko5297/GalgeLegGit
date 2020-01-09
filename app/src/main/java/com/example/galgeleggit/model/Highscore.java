@@ -13,8 +13,14 @@ import java.util.List;
 
 public class Highscore implements Comparable<Highscore> {
 
+    //region Fields
+
     private String name;
     private int score;
+
+    //endregion
+
+    //region Constructors
 
     public Highscore() {
 
@@ -24,6 +30,8 @@ public class Highscore implements Comparable<Highscore> {
         this.name = name;
         this.score = highscore;
     }
+
+    //endregion
 
     //region getters/setters
 
@@ -45,19 +53,8 @@ public class Highscore implements Comparable<Highscore> {
 
     //endregion
 
-    //region public methods
+    //region Interface methods
 
-    /*
-    public void addName(String stringName){
-        name.add(stringName + ": ");
-    }
-
-    public void addHighscore (int score){
-        highscore.add(score);
-    }
-
-
-     */
     @Override
     public int compareTo(Highscore highscore) {
         if (highscore.getScore()>score) {
@@ -70,4 +67,5 @@ public class Highscore implements Comparable<Highscore> {
     }
 
     //endregion
+
 }
