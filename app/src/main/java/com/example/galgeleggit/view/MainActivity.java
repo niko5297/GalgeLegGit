@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -26,7 +25,6 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
 import com.example.galgeleggit.model.Player;
-import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -35,11 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button start, continueButton, helpbutton, playername;
     Spinner spinner;
     ProgressDialog dialog;
+
     private int gameType;
     private AsyncTask asyncTask;
     private Help help = new Help();
     private String mPlayerName;
     private Player player = Player.getInstance();
+
     public static boolean isGameRunning;
     public static boolean newGame;
     public static Galgelogik galgelogik;
@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Galgelogik drGalgeLogik = new Galgelogik();
 
     //endregion
-    //TODO: Kommentarer
-
 
     //region onCreate / onResume
     @Override
@@ -56,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initialize view
         start = findViewById(R.id.start);
         continueButton = findViewById(R.id.continueButton);
         playername = findViewById(R.id.playername);
@@ -68,13 +67,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        //If the player havent chosen a name, alert him and show dialog again
         if (player.getName()==null) {
             choosePlayerName();
         }
+
+        //Adds spinner for game selection
         addSpinner();
 
     }
 
+    /**
+     * onResume is called when you return to the Activity.
+     * For this sake, we use onResume, to check if a game is currently running
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -120,6 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -129,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
+                Intent i = new Intent(this, HighScoreActivity.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -138,12 +154,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //endregion
 
     //region Spinner
+
+    /**
+     * This method adds the spinner/user game selection.
+     * The user can select between two types of game.
+     */
     private void addSpinner() {
-        String[] ordType = {"Almindelige word", "Hent word fra DR"};
+        String[] gameTypeSpinner = {"Almindelige ord", "Hent ord fra DR"};
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, android.R.id.text1, ordType);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, android.R.id.text1, gameTypeSpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setPrompt("Vælg din måde at spille på");
@@ -151,10 +172,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * This method handle the selection of gameTypes regarding the spinner
+     * @param adapterView where the selection has happen
+     * @param view that has been clicked on
+     * @param position in the spinner
+     * @param l row id
+     */
     @SuppressLint("StaticFieldLeak")
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        //Spillemåde 0 = Almindelig, Spillemåde 1 = Ord fra DR
+        //Gametype 0 = Almindelig, Gametype 1 = Ord fra DR
         gameType = position;
 
         if (position == 1) {
@@ -178,12 +206,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    return "Hentet word fra DR gennemført";
+                    return "Hentet ord fra DR gennemført";
                 }
 
                 @Override
                 protected void onPostExecute(Object o) {
-                    Toast.makeText(MainActivity.this, "Hentet word fra DR gennemført", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Hentet ord fra DR gennemført", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     asyncTask = null;
                 }
@@ -202,14 +230,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //region Support methods
 
-    private void startGameType(int spilType) {
+    /**
+     * This method is called based on the type of game that the user selects
+     * @param gameType position in spinner
+     */
+    private void startGameType(int gameType) {
 
-        if (spilType == 0) {
+        if (gameType == 0) {
 
             galgelogik = almindeligGalgeLogik;
         }
 
-        if (spilType == 1) {
+        if (gameType == 1) {
 
             galgelogik = drGalgeLogik;
         }
@@ -217,9 +249,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * This method inflates a dialog, which require the user to input a playername
+     * I used the below link as inspiration.
      * https://stackoverflow.com/questions/10903754/input-text-dialog-android
      */
-
     private void choosePlayerName(){
 
 
@@ -239,6 +272,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 mPlayerName = input.getText().toString();
                 player.setName(mPlayerName);
+
+                if (player.getName().equals("")){
+                    Toast.makeText(MainActivity.this, "Du har ikke valgt noget spille navn! Vælg et", Toast.LENGTH_SHORT).show();
+                    choosePlayerName();
+                }
             }
         });
         builder.show();

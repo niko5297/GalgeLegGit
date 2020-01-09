@@ -12,19 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * @date 11/11/2019
+ *
+ * @description This class is the custom written adapter, which defines the layout of RecyclerView
+ *
+ * @source https://developer.android.com/guide/topics/ui/layout/recyclerview
+ *
+ */
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    /**
-     * Kilde:
-     */
 
-    private List<String> mData;
+    private List<Highscore> highscoreList;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public Adapter(Context context, List<String> data) {
+    public Adapter(Context context, List<Highscore> highscoreList) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.highscoreList = highscoreList;
     }
 
     // inflates the row layout from xml when needed
@@ -37,24 +43,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String highscore = mData.get(position);
-        holder.textView.setText(highscore);
+        try {
+           // if (name.get(position))
+            holder.name.setText(highscoreList.get(position).getName()+": ");
+            holder.highscore.setText(highscoreList.get(position).getScore()+"");
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return highscoreList.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView name, highscore;
+
 
         ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textViewHighscore);
+            name = itemView.findViewById(R.id.highscoreName);
+            highscore =  itemView.findViewById(R.id.highscorePoints);
         }
 
     }

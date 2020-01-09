@@ -7,6 +7,13 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.galgeleggit.R;
 
+/**
+ * @date 08/01/2020
+ *
+ * @description This class handles help dialog
+ *
+ */
+
 public class Help {
 
     public Help () {

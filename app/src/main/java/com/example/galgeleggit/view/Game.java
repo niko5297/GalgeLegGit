@@ -18,30 +18,31 @@ import android.widget.TextView;
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Galgelogik;
 import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Highscore;
 import com.example.galgeleggit.model.Player;
 import com.example.galgeleggit.model.Points;
-import com.google.gson.Gson;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
 
-    public static Galgelogik galgelogik;
     TextView word, guessedLetters, switchText;
     EditText typeField;
     ImageView hangmanImage;
     Button checkLetter, newGameButton, points;
+
     private static int numberOfWrongGuesses = 0;
     private boolean usedLetter;
     private MediaPlayer mediaPlayer;
     private Player player = Player.getInstance();
-    public static Points pointManager = new Points();
+    private int highscoreCounter;
     private Help help = new Help();
-    public static Set<String> localHighscore = new HashSet<>();
+
+    public static Points pointManager = new Points();
+    public static Galgelogik galgelogik;
     public static final String prefsFile = "PrefsFile";
 
     //endregion
@@ -76,7 +77,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
 
-        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
 
         guessedLetters.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
@@ -130,6 +131,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -137,6 +143,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -146,7 +157,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
+                Intent i = new Intent(this, HighScoreActivity.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -156,8 +167,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Support Methods
 
+    /**
+     * This method updates the remaining word and the guessed letters.
+     * This method also checks if you won or lost the game.
+     */
     private void updateWordAndGuessedLetters() {
-        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
             if (galgelogik.erSidsteBogstavKorrekt() && !usedLetter) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);
@@ -175,9 +190,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
-                localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());
+                SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
+                highscoreCounter = prefs.getInt("counter",0);
+                highscoreCounter++;
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
-                editor.putStringSet("highscore", localHighscore);
+                editor.putInt("counter", highscoreCounter);
+                editor.putString("name_"+highscoreCounter, player.getName());
+                editor.putInt("highscore_"+highscoreCounter, pointManager.getNumberOfPoints());
                 editor.apply();
                 Intent i = new Intent(this, WinnerActivity.class);
                 startActivity(i);
@@ -197,6 +216,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * This method updates the hangman imageview if you have guessed wrong
+     */
     private void updateHangman() {
         usedLetter = false;
         if (galgelogik.getBrugteBogstaver().contains(typeField.getText().toString())) {
@@ -234,6 +256,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * This method shows the hangman, if the game have been paused.
+     */
     private void showHangman() {
         switch (numberOfWrongGuesses) {
             case 1:
@@ -264,6 +289,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Public methods
 
+    /**
+     * This method is used to reset the Game, if you launch a new game from WinnerActivity or LoserActivity
+     * @param numberOfWrongGuesses
+     */
     public static void setNumberOfWrongGuesses(int numberOfWrongGuesses) {
         Game.numberOfWrongGuesses = numberOfWrongGuesses;
     }

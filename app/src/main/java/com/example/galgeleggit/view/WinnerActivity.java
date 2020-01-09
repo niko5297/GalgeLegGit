@@ -23,16 +23,22 @@ import com.example.galgeleggit.model.Help;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
+/**
+ *
+ * @source https://android-arsenal.com/details/1/7959
+ *
+ */
 public class WinnerActivity extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
 
     Button newGameButton, backButton;
-    private MaterialDialog mSimpleDialog;
-    private Help help = new Help();
     ViewGroup container;
     TextView winner;
     ImageView trophyImage;
+
+    private MaterialDialog mSimpleDialog;
+    private Help help = new Help();
 
     //endregion
 
@@ -62,7 +68,11 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
         runConfetti();
     }
 
-
+    /**
+     * Inflates the help and highscore menu, top right corner of the toolbar
+     * @param menu menu
+     * @return true or false if it is successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -70,7 +80,11 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
         return super.onCreateOptionsMenu(menu);
     }
 
-
+    /**
+     * Lets the user select the options in the inflated menu.
+     * @param item clicked on
+     * @return true or false if it is successful
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -79,7 +93,7 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
                 help.inflateHelp(this);
                 break;
             case R.id.highscore:
-                Intent i = new Intent(this, HighScore.class);
+                Intent i = new Intent(this, HighScoreActivity.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -103,12 +117,17 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //region Support methods
-
+    /**
+     * This method runs the winning animation
+     */
     private void runAnimation() {
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_image);
         trophyImage.startAnimation(rotate);
     }
 
+    /**
+     * This method runs the confetti from Android Arsenal
+     */
     private void runConfetti() {
         container.post(new Runnable() {
             @Override
@@ -118,6 +137,9 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+    /**
+     * This method sets the new game if you decide to run a new game from WinnerActivity
+     */
     private void setNytspil() {
         MainActivity.isGameRunning = true;
         MainActivity.newGame = false;
@@ -130,15 +152,17 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
-     * https://android-arsenal.com/details/1/7959
+     * This method builds the material components dialog with animation
+     *
+     * @source https://android-arsenal.com/details/1/7959*
      */
-
     private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)
                 .setTitle("Nyt spil?")
                 .setMessage("Vil du gerne starte en nyt spil?")
                 .setCancelable(false)
+                .setAnimation("newGame.json")
                 .setPositiveButton("Helt sikkert", R.drawable.ic_done_black_24dp, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
