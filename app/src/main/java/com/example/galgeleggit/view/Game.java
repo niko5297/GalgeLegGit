@@ -25,7 +25,12 @@ import com.example.galgeleggit.model.Points;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @date 18/10/2019
+ *
+ * @description
+ *
+ */
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
@@ -39,7 +44,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private boolean usedLetter;
     private MediaPlayer mediaPlayer;
     private Player player = Player.getInstance();
-    private Highscore highscore = Highscore.getInstance();
+    private int highscoreCounter;
     public static Points pointManager = new Points();
     private Help help = new Help();
     public static List<String> localHighscoreName = new ArrayList<>();
@@ -78,7 +83,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
 
-        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
 
         guessedLetters.setText("Du har gættet på følgende bogstaver: " + galgelogik.getBrugteBogstaver());
 
@@ -177,11 +182,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this, R.raw.victory);
                 mediaPlayer.setVolume(4F, 4F);
                 mediaPlayer.start();
+                SharedPreferences prefs = getSharedPreferences(prefsFile, MODE_PRIVATE);
+                highscoreCounter = prefs.getInt("counter",0);
+                highscoreCounter++;
                 SharedPreferences.Editor editor = getSharedPreferences(prefsFile, MODE_PRIVATE).edit();
                 localHighscoreName.add((player.getName() + ": "));
                 localHighscore.add(pointManager.getNumberOfPoints());
-                editor.putString("name", player.getName() + ": ");
-                editor.putInt("highscore", pointManager.getNumberOfPoints());
+                editor.putInt("counter", highscoreCounter);
+                editor.putString("name_"+highscoreCounter, player.getName());
+                editor.putInt("highscore_"+highscoreCounter, pointManager.getNumberOfPoints());
                 editor.apply();
                 /*
                 localHighscore.add(player.getName() + ": " + pointManager.getNumberOfPoints());

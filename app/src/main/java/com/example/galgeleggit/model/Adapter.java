@@ -12,21 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * @date 11/11/2019
+ *
+ * @description
+ *
+ * @source https://developer.android.com/guide/topics/ui/layout/recyclerview
+ *
+ */
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    /**
-     * Kilde:
-     */
 
-    private List<String> name;
-    private List<Integer> highscore;
+    private List<Highscore> highscoreList;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public Adapter(Context context, List<String> name, List<Integer> highscore) {
+    public Adapter(Context context, List<Highscore> highscoreList) {
         this.mInflater = LayoutInflater.from(context);
-        this.name = name;
-        this.highscore = highscore;
+        this.highscoreList = highscoreList;
     }
 
     // inflates the row layout from xml when needed
@@ -41,8 +45,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         try {
            // if (name.get(position))
-            holder.name.setText(name.get(position));
-            holder.highscore.setText(highscore.get(position)+"");
+            holder.name.setText(highscoreList.get(position).getName()+": ");
+            holder.highscore.setText(highscoreList.get(position).getScore()+"");
         }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
@@ -51,7 +55,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     // total number of rows
     @Override
     public int getItemCount() {
-        return highscore.size();
+        return highscoreList.size();
     }
 
 

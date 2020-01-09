@@ -23,6 +23,14 @@ import com.example.galgeleggit.model.Help;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
+/**
+ * @date 7/11/2019
+ *
+ * @description
+ *
+ * @source https://android-arsenal.com/details/1/7959
+ *
+ */
 public class WinnerActivity extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields

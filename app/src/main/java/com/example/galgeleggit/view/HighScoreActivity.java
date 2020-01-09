@@ -16,13 +16,21 @@ import android.widget.Toast;
 import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Adapter;
 import com.example.galgeleggit.model.Help;
+import com.example.galgeleggit.model.Highscore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * @date 11/11/2019
+ *
+ * @description
+ *
+ * @source https://developer.android.com/guide/topics/ui/layout/recyclerview
+ *
+ */
 public class HighScoreActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //region Fields
@@ -31,8 +39,11 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
     RecyclerView recyclerView;
     private Adapter adapter;
     private Help help = new Help();
+    private int counter;
+    private Highscore highscore;
+    private List<Highscore> highscoreList = new ArrayList<>();
     private static List<String> playerName = new ArrayList<>();
-    private static List<Integer> highscore = new ArrayList<>();
+    private static List<Integer> highscorelistikkebrug = new ArrayList<>();
 
     //endregion
 
@@ -48,8 +59,29 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
 
         try {
 
-            playerName.add(prefs.getString("name",""));
-            highscore.add(prefs.getInt("highscore",0));
+            counter = prefs.getInt("counter",0);
+
+            System.out.println(counter);
+
+            //highscore = new Highscore(prefs.getString("name",""), prefs.getInt("highscore",0));
+
+//            System.out.println(highscore.getName() + highscore.getScore());
+
+
+
+
+
+            for (int i = 1; i<=counter; i++){
+                highscore = new Highscore(prefs.getString("name_"+i,""), prefs.getInt("highscore_"+i,0));
+                System.out.println(highscore.getName() + highscore.getScore());
+                highscoreList.add(highscore);
+            }
+
+
+
+
+
+            Collections.sort(highscoreList);
 
 
 
@@ -60,9 +92,9 @@ public class HighScoreActivity extends AppCompatActivity implements AdapterView.
             //System.out.println(highscore);
 
 //          Collections.sort(playerName);
-            Arrays.sort(highscore.toArray());
+          //  Arrays.sort(highscorelistikkebrug.toArray());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new Adapter(this, playerName,highscore);
+            adapter = new Adapter(this, highscoreList);
             recyclerView.setAdapter(adapter);
         } catch (NullPointerException e) {
             e.printStackTrace();

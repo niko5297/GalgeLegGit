@@ -20,6 +20,14 @@ import com.example.galgeleggit.R;
 import com.example.galgeleggit.model.Help;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
+/**
+ * @date 7/11/2019
+ *
+ * @description
+ *
+ * @source https://android-arsenal.com/details/1/7959
+ *
+ */
 public class LoserActivity extends AppCompatActivity implements View.OnClickListener {
 
     //region Fields
@@ -108,9 +116,6 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
-    /**
-     * https://android-arsenal.com/details/1/7959
-     */
     private void buildDialog() {
         // Simple Material Dialog
         mSimpleDialog = new MaterialDialog.Builder(this)

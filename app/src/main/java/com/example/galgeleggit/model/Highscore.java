@@ -3,54 +3,71 @@ package com.example.galgeleggit.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Highscore {
+/**
+ * @date 08/01/2020
+ *
+ * @description
+ *
+ * @source https://www.baeldung.com/java-singleton
+ *
+ */
 
-    public List<String> name;
-    public List<Integer> highscore;
-    private static Highscore instance;
+public class Highscore implements Comparable<Highscore> {
 
-    private Highscore(List<String> name, List<Integer> highscore){
-        this.highscore = new ArrayList<>(highscore);
-        this.name = new ArrayList<>(name);
+    private String name;
+    private int score;
+
+    public Highscore() {
 
     }
 
-    public static Highscore getInstance(){
-        if (instance==null){
-            instance = new Highscore(new ArrayList<String>(), new ArrayList<Integer>());
-        }
-        return instance;
+    public Highscore (String name, int highscore) {
+        this.name = name;
+        this.score = highscore;
     }
 
     //region getters/setters
 
-
-    public List<String> getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(List<String> name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<Integer> getHighscore() {
-        return highscore;
+    public int getScore() {
+        return score;
     }
 
-    public void setHighscore(List<Integer> highscore) {
-        this.highscore = highscore;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     //endregion
 
     //region public methods
 
+    /*
     public void addName(String stringName){
         name.add(stringName + ": ");
     }
 
     public void addHighscore (int score){
         highscore.add(score);
+    }
+
+
+     */
+    @Override
+    public int compareTo(Highscore highscore) {
+        if (highscore.getScore()>score) {
+            return 1;
+        }
+        else if (highscore.getScore()==score){
+            return 0;
+        }
+        else return -1;
     }
 
     //endregion

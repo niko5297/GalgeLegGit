@@ -1,5 +1,12 @@
 package com.example.galgeleggit.model;
 
+/**
+ * @date 08/01/2020
+ *
+ * @description
+ *
+ */
+
 public class Points {
 
     private boolean lastCorrect;
@@ -9,6 +16,7 @@ public class Points {
     public Points() {
     }
 
+    //region public methods
 
     public int givPoint() {
 
@@ -44,6 +52,8 @@ public class Points {
         lastCorrect = false;
         numberOfPoints = 0;
     }
+
+    //endregion
 
     //region getters/setters
 
