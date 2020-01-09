@@ -147,6 +147,7 @@ public class WinnerActivity extends AppCompatActivity implements View.OnClickLis
                 .setTitle("Nyt spil?")
                 .setMessage("Vil du gerne starte en nyt spil?")
                 .setCancelable(false)
+                .setAnimation("newGame.json")
                 .setPositiveButton("Helt sikkert", R.drawable.ic_done_black_24dp, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {

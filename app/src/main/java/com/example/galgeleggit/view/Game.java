@@ -164,7 +164,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     //region Support Methods
 
     private void updateWordAndGuessedLetters() {
-        word.setText("Du skal gætte følgende word: " + galgelogik.getSynligtOrd());
+        word.setText("Du skal gætte følgende ord: " + galgelogik.getSynligtOrd());
         if (galgelogik.getBrugteBogstaver().size() > 0) {
             if (galgelogik.erSidsteBogstavKorrekt() && !usedLetter) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.points);

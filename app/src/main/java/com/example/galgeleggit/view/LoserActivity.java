@@ -122,6 +122,7 @@ public class LoserActivity extends AppCompatActivity implements View.OnClickList
                 .setTitle("Nyt spil?")
                 .setMessage("Vil du gerne starte en nyt spil?")
                 .setCancelable(false)
+                .setAnimation("newGame.json")
                 .setPositiveButton("Helt sikkert", R.drawable.ic_done_black_24dp, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int i) {
